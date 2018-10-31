@@ -2,6 +2,7 @@
 // Created by rafal on 19/10/18.
 //
 
+#include <iostream>
 #include "../include/Movie.h"
 
 Movie::Movie(const std::string &name, const std::string &description,
@@ -38,4 +39,16 @@ int Movie::getDurationInMinutes() const {
 
 void Movie::setDurationInMinutes(int durationInMinutes) {
     Movie::durationInMinutes = durationInMinutes;
+}
+
+bool Movie::operator==(const std::string &s) {
+    return name == s;
+}
+
+std::string Movie::toString() {
+    return name + " " + description + " " + std::to_string(rate) + " " + std::to_string(durationInMinutes);
+}
+
+Movie::Movie() {
+
 }

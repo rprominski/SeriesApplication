@@ -20,13 +20,16 @@ class UserInterface {
 
     void showOptions();
 
-    void exit();
-
     void addFilm();
 
     void showAllMovies();
 
     void removeMovie();
+
+    void loadSavedFiles();
+
+    void wait();
+
 public:
     void start();
 

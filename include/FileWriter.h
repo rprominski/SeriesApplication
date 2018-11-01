@@ -5,6 +5,7 @@
 #ifndef SERIESAPPLICATION_FILEWRITER_H
 #define SERIESAPPLICATION_FILEWRITER_H
 #include <string>
+#include <vector>
 #include "Movie.h"
 
 class FileWriter {
@@ -25,7 +26,7 @@ public:
 
     void setPath(const std::string &path);
 
-    void checkIfExist(Movie movie);
+    std::vector<Movie> getAllRecords();
 
 };
 

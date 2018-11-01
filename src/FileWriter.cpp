@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <iterator>
 
 FileWriter::FileWriter(const std::string &path) : path(path) {}
 
@@ -41,6 +42,20 @@ bool FileWriter::deleteRecord(std::string recordName) {
     std::rename("temp",path.c_str());
 
     return find ? true : false;
+}
+
+std::vector<Movie> FileWriter::getAllRecords() {
+    std::vector <Movie> records;
+    std::ifstream input(path);
+    std::string s,data;
+    int i=0;
+    while(getline(input,s)) {
+        std::stringstream ss(s);
+        std::vector<std::string> info((std::istream_iterator<std::string>(ss)),
+                                         std::istream_iterator<std::string>());
+        records.push_back(Movie(info));
+    }
+    return records;
 }
 
 

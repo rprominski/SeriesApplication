@@ -52,3 +52,7 @@ std::string Movie::toString() {
 Movie::Movie() {
 
 }
+
+Movie::Movie(std::vector<std::string> &data): name(data[0]), description(data[1]),
+                                              rate(stoi(data[2])), durationInMinutes(stoi(data[3])) {}
+

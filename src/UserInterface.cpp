@@ -6,6 +6,8 @@
 #include "../include/FileWriter.h"
 #include <iostream>
 
+UserInterface::UserInterface() : end(0) {}
+
 void UserInterface::showOptions() {
     std::cout << "1. Add film \n"
         << "2. Remove film \n"
@@ -38,15 +40,15 @@ void UserInterface::performAction() {
 }
 
 void UserInterface::start() {
-
+    loadSavedFiles();
     while(!end) {
         showOptions();
         getAction();
         performAction();
+        wait();
+        system("clear");
     }
 }
-
-UserInterface::UserInterface() : end(0) {}
 
 void UserInterface::addFilm() {
     std::cout<< "Which type would you like to add?\n"
@@ -84,6 +86,18 @@ void UserInterface::removeMovie() {
     if(!fileWriter.deleteRecord(name)) {
         std::cout << "Movie not exists \n";
     }
-
-
 }
+
+void UserInterface::loadSavedFiles() {
+    FileWriter fileWriter;
+    for(auto movie :fileWriter.getAllRecords()) {
+        pool.add(movie);
+    }
+}
+
+void UserInterface::wait() {
+    std::cout << "Press enter to continue ...";
+    std::cin.ignore();
+    std::cin.get();
+}
+

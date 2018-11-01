@@ -46,7 +46,7 @@ bool Movie::operator==(const std::string &s) {
 }
 
 std::string Movie::toString() {
-    return name + " " + description + " " + std::to_string(rate) + " " + std::to_string(durationInMinutes);
+    return name + "\n" + description + "\n" + std::to_string(rate) + "\n" + std::to_string(durationInMinutes);
 }
 
 Movie::Movie() {

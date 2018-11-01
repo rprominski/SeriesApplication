@@ -72,7 +72,7 @@ void UserInterface::addFilm() {
 
 void UserInterface::showAllMovies() {
     for(auto i : pool.getRecords()) {
-        std:: cout << i.toString() << std::endl;
+        std:: cout << i.toString() << "\n\n";
     }
 }
 

@@ -22,6 +22,9 @@ void FileWriter::setPath(const std::string &path) {
 
 void FileWriter::write(Movie data) {
     std::ofstream output(path,std::ios::app);
+    if(typeid(data) == typeid(Movie)) {
+        output << "Movie\n";
+    }
     output << data.toString() << std::endl;
 }
 
@@ -48,15 +51,20 @@ std::vector<Movie> FileWriter::getAllRecords() {
     std::vector <Movie> records;
     std::ifstream input(path);
     std::string s,data;
-    int i=0;
     while(getline(input,s)) {
-        std::stringstream ss(s);
-        std::vector<std::string> info((std::istream_iterator<std::string>(ss)),
-                                         std::istream_iterator<std::string>());
-        records.push_back(Movie(info));
+        std::vector <std::string> args;
+        if(s == "Movie") {
+            std::string arg;
+            for(int i = 0; i < 4; i++) {
+                getline(input,arg);
+                args.push_back(arg);
+            }
+            records.push_back(Movie(args));
+        }
     }
     return records;
 }
+
 
 
 

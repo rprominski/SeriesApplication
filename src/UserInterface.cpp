@@ -59,11 +59,10 @@ void UserInterface::addFilm() {
     int type,rate,duration;
 
     std::cin>>type;
-    std::cout<<"Title: ";
-    std::cin >> title; //NEED GETLINE
-    std::cout<<"Descripion: "; std::cin >> description;/*getline(std::cin,description); std::cin.ignore(); //NEED GETLINE*/
-    std::cout<<"Rate: "; std::cin >> rate;
-    std::cout<<"Duration (in minutes): "; std::cin >> duration;
+    std::cout<<"Title: "; std::cin.ignore(); std::getline(std::cin,title);
+    std::cout<<"Descripion: "; std::getline(std::cin,description);
+    std::cout<<"Rate: "; rate = cinInt();
+    std::cout<<"Duration (in minutes): "; duration = cinInt();
 
     if(pool.add(Movie(title,description,rate,duration))) {
         FileWriter fileWriter;
@@ -101,3 +100,15 @@ void UserInterface::wait() {
     std::cin.get();
 }
 
+int UserInterface::cinInt() {
+    std::string s;
+    int number;
+    while(std::getline(std::cin, s)) {
+        try {
+            number = stoi(s);
+            return number;
+        } catch (std::exception &ex) {
+            std::cout << "You must give a number. Try again\n";
+        }
+    }
+}

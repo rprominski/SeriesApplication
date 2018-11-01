@@ -30,6 +30,7 @@ class UserInterface {
 
     void wait();
 
+    int cinInt();
 public:
     void start();
 

@@ -1,7 +1,9 @@
 #include <iostream>
+#include "../include/UserInterface.h"
 
 int main() {
 
-    std::cout << "Hello, World!" << std::endl;
+    UserInterface userInterface;
+    userInterface.start();
     return 0;
 }

@@ -3,6 +3,7 @@
 //
 
 #include "../include/Series.h"
+#include <numeric>
 
 int Series::getNumberOfEpisodes() const {
     return numberOfEpisodes;
@@ -12,23 +13,20 @@ void Series::setNumberOfEpisodes(int numberOfEpisodes) {
     Series::numberOfEpisodes = numberOfEpisodes;
 }
 
-int Series::getEpisodeDurationInMinutes() const {
-    return episodeDurationInMinutes;
-}
-
-void Series::setEpisodeDurationInMinutes(int episodeDurationInMinutes) {
-    Series::episodeDurationInMinutes = episodeDurationInMinutes;
-}
-
-const std::vector<DayOfWeek> &Series::getBroadcastDays() const {
+const std::vector<std::string> &Series::getBroadcastDays() const {
     return broadcastDays;
 }
 
-void Series::setBroadcastDays(const std::vector<DayOfWeek> &broadcastDays) {
+void Series::setBroadcastDays(const std::vector<std::string> &broadcastDays) {
     Series::broadcastDays = broadcastDays;
 }
 
 Series::Series(const std::string &name, const std::string &description, int rate, int durationInMinutes,
-               int numberOfEpisodes, int episodeDurationInMinutes, const std::vector<DayOfWeek> &broadcastDays) : Movie(
-        name, description, rate, durationInMinutes), numberOfEpisodes(numberOfEpisodes), episodeDurationInMinutes(
-        episodeDurationInMinutes), broadcastDays(broadcastDays) {}
+                const std::vector<std::string> &broadcastDays,int numberOfEpisodes) :
+                Movie(name, description, rate, durationInMinutes), numberOfEpisodes(numberOfEpisodes),
+                broadcastDays(broadcastDays) {}
+
+std::string Series::toString() {
+    return Movie::toString() + " " + std::accumulate(broadcastDays.begin(), broadcastDays.end(), std::string("")) +
+         " " + std::to_string(numberOfEpisodes);
+}

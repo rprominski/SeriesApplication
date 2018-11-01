@@ -5,8 +5,8 @@
 #ifndef SERIESAPPLICATION_MOVIE_H
 #define SERIESAPPLICATION_MOVIE_H
 
-
 #include <string>
+#include <vector>
 
 class Movie {
 private:
@@ -17,6 +17,10 @@ private:
 
 public:
     Movie(const std::string &name, const std::string &description, int rate, int durationInMinutes);
+
+    Movie();
+
+    Movie(std::vector<std::string> &data);
 
     const std::string &getName() const;
 
@@ -33,6 +37,10 @@ public:
     int getDurationInMinutes() const;
 
     void setDurationInMinutes(int durationInMinutes);
+
+    bool operator==(const std::string& s);
+
+    std::string toString();
 };
 
 

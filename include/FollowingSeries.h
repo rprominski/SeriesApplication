@@ -7,7 +7,7 @@
 
 #include "Series.h"
 
-class FollowingSeries : Series {
+class FollowingSeries : public  Series {
 private:
 
     int numberOfWatchedEpisodes;

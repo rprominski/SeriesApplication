@@ -24,7 +24,9 @@ class UserInterface {
 
     void addFilm();
 
-    void showAllFilms();
+    void showAllMovies();
+
+    void removeMovie();
 public:
     void start();
 

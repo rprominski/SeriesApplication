@@ -25,11 +25,11 @@ void UserInterface::performAction() {
     }
 
     if(action == 2) {
-
+        removeMovie();
     }
 
     if(action == 3) {
-        showAllFilms();
+        showAllMovies();
     }
 
     if(action == 4) {
@@ -50,27 +50,40 @@ UserInterface::UserInterface() : end(0) {}
 
 void UserInterface::addFilm() {
     std::cout<< "Which type would you like to add?\n"
-        << "1.Movie\n"
-        << "2.Series\n";
+        << "1.Movie\n";
+       // << "2.Series\n";
 
     std::string title,description;
     int type,rate,duration;
 
     std::cin>>type;
-    std::cout<<"Title: "; std::cin >> title; //NEED GETLINE
+    std::cout<<"Title: ";
+    std::cin >> title; //NEED GETLINE
     std::cout<<"Descripion: "; std::cin >> description;/*getline(std::cin,description); std::cin.ignore(); //NEED GETLINE*/
     std::cout<<"Rate: "; std::cin >> rate;
     std::cout<<"Duration (in minutes): "; std::cin >> duration;
 
     if(pool.add(Movie(title,description,rate,duration))) {
         FileWriter fileWriter;
-        fileWriter.write(Movie(Movie(title,description,rate,duration)));
+        fileWriter.write(Movie(title,description,rate,duration));
     }
-
 }
 
-void UserInterface::showAllFilms() {
+void UserInterface::showAllMovies() {
     for(auto i : pool.getRecords()) {
         std:: cout << i.toString() << std::endl;
     }
+}
+
+void UserInterface::removeMovie() {
+    std::string name;
+    std::cout << "Type name of movie you'd like to remove \n";
+    std::cin.ignore();
+    std::getline(std::cin,name);
+    FileWriter fileWriter;
+    if(!fileWriter.deleteRecord(name)) {
+        std::cout << "Movie not exists \n";
+    }
+
+
 }

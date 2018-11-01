@@ -1,10 +1,11 @@
 //
 // Created by rafal on 19/10/18.
 //
-#include <string>
+
 #ifndef SERIESAPPLICATION_FILEWRITER_H
 #define SERIESAPPLICATION_FILEWRITER_H
-
+#include <string>
+#include "Movie.h"
 
 class FileWriter {
 private:
@@ -12,18 +13,19 @@ private:
     std::string path;
 
 public:
-
     FileWriter(const std::string &path);
 
     FileWriter();
 
-    void write(std::string data);
+    void write(Movie data);
 
-    void deleteRecord(std::string recordName);
+    bool deleteRecord(std::string recordName);
 
     const std::string &getPath() const;
 
     void setPath(const std::string &path);
+
+    void checkIfExist(Movie movie);
 
 };
 

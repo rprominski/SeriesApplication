@@ -31,6 +31,8 @@ class UserInterface {
     void wait();
 
     int cinInt();
+
+    void showInfoAboutMovie();
 public:
     void start();
 

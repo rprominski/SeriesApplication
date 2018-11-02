@@ -9,12 +9,12 @@
 UserInterface::UserInterface() : end(0) {}
 
 void UserInterface::showOptions() {
-    std::cout << "1. Add film \n"
-        << "2. Remove film \n"
-        << "3. Show all films \n"
-        << "4 Exit \n";
-
-
+    std::cout << "1. Add film\n"
+        << "2. Remove film\n"
+        << "3. Show all films\n"
+        << "4 Exit\n"
+        << "5 Show info about film\n"
+        << "6 Propose\n";
 }
 
 void UserInterface::getAction() {
@@ -36,6 +36,10 @@ void UserInterface::performAction() {
 
     if(action == 4) {
         end = 1;
+    }
+
+    if(action == 5) {
+        showInfoAboutMovie();
     }
 }
 
@@ -115,4 +119,16 @@ int UserInterface::cinInt() {
             std::cout << "You must give a number. Try again\n";
         }
     }
+}
+
+void UserInterface::showInfoAboutMovie() {
+    std::string name;
+    std::cout << "Give a name \n";
+    std::cin.ignore();
+    getline(std::cin,name);
+    if(!pool.exist(name)) {
+        std::cout << "Movie doesn't exists";
+        return;
+    }
+    std::cout << pool.findbyName(name).toString() << std::endl;
 }

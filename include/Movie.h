@@ -42,6 +42,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Movie& movie);
 
+    bool operator<(const Movie& m1);
+
     std::string toString();
 };
 

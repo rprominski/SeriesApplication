@@ -8,6 +8,7 @@
 
 #include "Movie.h"
 #include "Pool.h"
+#include "FollowingSeries.h"
 
 class UserInterface {
     bool end;
@@ -33,6 +34,8 @@ class UserInterface {
     int cinInt();
 
     void showInfoAboutMovie();
+
+    void proposeMovieForWatching();
 public:
     void start();
 

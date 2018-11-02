@@ -44,5 +44,9 @@ public:
         records.push_back(t);
         return true;
     }
+
+    void sort() {
+        std::sort(records.begin(),records.end());
+    }
 };
 #endif //SERIESAPPLICATION_POOL_H

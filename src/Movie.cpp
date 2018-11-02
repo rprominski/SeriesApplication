@@ -31,6 +31,12 @@ int Movie::getRate() const {
 
 void Movie::setRate(int rate) {
     Movie::rate = rate;
+    if(rate < 0) {
+        Movie::rate = 0;
+    }
+    if(rate > 10) {
+        Movie::rate = 10;
+    }
 }
 
 int Movie::getDurationInMinutes() const {
@@ -58,7 +64,12 @@ Movie::Movie(std::vector<std::string> &data): name(data[0]), description(data[1]
 
 std::ostream &operator<<(std::ostream &os, const Movie &movie) {
     os << "Name -> " << movie.name << "\nDescription -> " << movie.description << "\nRate -> " << movie.rate
-    << "\nDuration (in minutes) -> " << movie.durationInMinutes;
+    << "\nDuration (in minutes) -> " << movie.durationInMinutes <<"\n";
+    std::cin.ignore();
     return os;
+}
+
+bool Movie::operator<(const Movie &m1) {
+    return m1.rate < this->getRate();
 }
 

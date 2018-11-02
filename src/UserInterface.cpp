@@ -41,6 +41,10 @@ void UserInterface::performAction() {
     if(action == 5) {
         showInfoAboutMovie();
     }
+
+    if(action == 6) {
+        proposeMovieForWatching();
+    }
 }
 
 void UserInterface::start() {
@@ -75,6 +79,7 @@ void UserInterface::addFilm() {
 }
 
 void UserInterface::showAllMovies() {
+    pool.sort();
     for(auto i : pool.getRecords()) {
         std:: cout << i << "\n\n";
     }
@@ -123,12 +128,21 @@ int UserInterface::cinInt() {
 
 void UserInterface::showInfoAboutMovie() {
     std::string name;
-    std::cout << "Give a name \n";
+    std::cout << "Give a name\n";
     std::cin.ignore();
     getline(std::cin,name);
     if(!pool.exist(name)) {
-        std::cout << "Movie doesn't exists";
+        std::cout << "Movie doesn't exists\n";
         return;
     }
     std::cout << pool.findbyName(name)<< std::endl;
+}
+
+void UserInterface::proposeMovieForWatching() {
+    pool.sort();
+    if(pool.getRecords().size() == 0) {
+        std::cout << "There is no movies to watch\n";
+        return;
+    }
+    std::cout << pool.getRecords()[0];
 }

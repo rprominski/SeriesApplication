@@ -9,12 +9,12 @@
 UserInterface::UserInterface() : end(0) {}
 
 void UserInterface::showOptions() {
-    std::cout << "1. Add film\n"
-        << "2. Remove film\n"
-        << "3. Show all films\n"
+    std::cout << "\n1.Add film\n"
+        << "2.Remove film\n"
+        << "3.Show all films\n"
         << "4 Exit\n"
         << "5 Show info about film\n"
-        << "6 Propose\n";
+        << "6 Propose Movie for watching\n";
 }
 
 void UserInterface::getAction() {
@@ -76,7 +76,7 @@ void UserInterface::addFilm() {
 
 void UserInterface::showAllMovies() {
     for(auto i : pool.getRecords()) {
-        std:: cout << i.toString() << "\n\n";
+        std:: cout << i << "\n\n";
     }
 }
 
@@ -130,5 +130,5 @@ void UserInterface::showInfoAboutMovie() {
         std::cout << "Movie doesn't exists";
         return;
     }
-    std::cout << pool.findbyName(name).toString() << std::endl;
+    std::cout << pool.findbyName(name)<< std::endl;
 }

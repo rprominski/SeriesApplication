@@ -40,6 +40,8 @@ public:
 
     bool operator==(const std::string& s);
 
+    friend std::ostream& operator<<(std::ostream& os, const Movie& movie);
+
     std::string toString();
 };
 

@@ -13,7 +13,7 @@
 class UserInterface {
     bool end;
     int action;
-    Pool <Movie> pool;
+    Pool <Movie*> pool;
 
     void getAction();
 

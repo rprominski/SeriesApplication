@@ -9,7 +9,7 @@
 #include <vector>
 
 class Movie {
-private:
+protected:
     std::string name;
     std::string description;
     int rate;
@@ -44,7 +44,9 @@ public:
 
     bool operator<(const Movie& m1);
 
-    std::string toString();
+    virtual void print(std::ostream& os) const;
+
+    virtual std::string toString();
 };
 
 

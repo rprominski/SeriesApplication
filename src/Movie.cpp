@@ -63,13 +63,16 @@ Movie::Movie(std::vector<std::string> &data): name(data[0]), description(data[1]
                                               rate(stoi(data[2])), durationInMinutes(stoi(data[3])) {}
 
 std::ostream &operator<<(std::ostream &os, const Movie &movie) {
-    os << "Name -> " << movie.name << "\nDescription -> " << movie.description << "\nRate -> " << movie.rate
-    << "\nDuration (in minutes) -> " << movie.durationInMinutes <<"\n";
-    std::cin.ignore();
+    movie.print(os);
     return os;
 }
 
 bool Movie::operator<(const Movie &m1) {
     return m1.rate < this->getRate();
+}
+
+void Movie::print(std::ostream &os) const {
+    os << "Name -> " << name << "\nDescription -> " << description << "\nRate -> " << rate
+       << "\nDuration (in minutes) -> " << durationInMinutes <<"\n";
 }
 

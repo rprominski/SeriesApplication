@@ -9,20 +9,23 @@
 #include <string>
 #include "Movie.h"
 #include "DayOfWeek.h"
-
-class Series : public Movie {
+#include <iostream>
+class Series : public virtual Movie {
 private:
 
     int numberOfEpisodes;
     std::vector<std::string> broadcastDays;
 public:
     Series(const std::string &name, const std::string &description, int rate, int durationInMinutes,
-           const std::vector<std::string> &broadcastDays,int numberOfEpisodes);
-
-    Series(const std::string &name, const std::string &description, int rate, int durationInMinutes,
            int numberOfEpisodes, const std::vector<std::string> &broadcastDays);
 
-public:
+    Series(const std::string &name, const std::string &description, int rate, int durationInMinutes,
+                   int numberOfEpisodes, const std::string &days);
+
+    Series(std::vector<std::string> args);
+
+    //using Movie::Movie;
+
     int getNumberOfEpisodes() const;
 
     void setNumberOfEpisodes(int numberOfEpisodes);
@@ -31,7 +34,11 @@ public:
 
     void setBroadcastDays(const std::vector<std::string> &broadcastDays);
 
+    std::vector<std::string> parseDays(std::string days);
+
     std::string toString();
+
+    void print(std::ostream& os) const;
 
 };
 

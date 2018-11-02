@@ -21,23 +21,25 @@ public:
     }
 
     T findbyName(std::string name) {
-        auto r = std::find(records.begin(),records.end(),name);
-        if( r != records.end()) {
-            return *r;
+        for(auto i : records) {
+            if(i -> getName() == name) {
+                //std::cout<<"YESSS";
+                return i;
+            }
         }
-        return T();
-    }
-
-    bool exist(std::string name) {
-        return (std::find(records.begin(),records.end(),name)!= records.end()) ? true : false;
+        return nullptr;
     }
 
     void remove (std::string name) {
-        records.erase(std::find(records.begin(),records.end(),name));
+        for(int i = 0; i < records.size(); i++) {
+            if(records[i] -> getName() == name) {
+                records.erase(records.begin() + i);
+            }
+        }
     }
 
     bool add(T t) {
-        if(exist(t.getName())) {
+        if(findbyName(t -> getName()) != nullptr) {
             std::cout << "Record with this name already exists" << std::endl;
             return false;
         }

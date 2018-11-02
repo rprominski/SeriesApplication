@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 #include "Movie.h"
-
+#include "Series.h"
 class FileWriter {
 private:
 
@@ -18,7 +18,7 @@ public:
 
     FileWriter();
 
-    void write(Movie data);
+    void write(Movie* data);
 
     bool deleteRecord(std::string recordName);
 
@@ -26,9 +26,7 @@ public:
 
     void setPath(const std::string &path);
 
-    std::vector<Movie> getAllRecords();
-
-    std::vector<std::string> getLines(int numberOfLines, std::ifstream *input);
+    std::vector<std::string> getLines(int numberOfLines, std::ifstream& input);
 
 };
 

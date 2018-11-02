@@ -20,12 +20,16 @@ void FileWriter::setPath(const std::string &path) {
     FileWriter::path = path;
 }
 
-void FileWriter::write(Movie data) {
+void FileWriter::write(Movie* data) {
     std::ofstream output(path,std::ios::app);
-    if(typeid(data) == typeid(Movie)) {
+    if(typeid(*data) == typeid(Series)) {
+        output << "Series\n";
+    } else
+    if(typeid(*data) == typeid(Movie)) {
         output << "Movie\n";
     }
-    output << data.toString() << std::endl;
+
+    output << data -> toString() << std::endl;
 }
 
 bool FileWriter::deleteRecord(std::string recordName) {
@@ -58,38 +62,17 @@ bool FileWriter::deleteRecord(std::string recordName) {
     return find;
 }
 
-std::vector<Movie> FileWriter::getAllRecords() {
-    std::vector <Movie> records;
-    std::ifstream input(path);
-    std::string s,data;
-    while(getline(input,s)) {
-        std::vector <std::string> args;
-        std::string arg;
-        int argsNumber;
-
-        if(s == "Movie") {
-            std::string arg;
-            for(int i = 0; i < 4; i++) {
-                getline(input,arg);
-                args.push_back(arg);
-            }
-            records.push_back(Movie(args));
-        }
-     //   args = getLines(argsNumber,&input);
-     //   records.push_back(Movie(args));
-    }
-    return records;
-}
-
-/*std::vector<std::string> FileWriter::getLines(int numberOfLines, std::ifstream* input) {
+std::vector<std::string> FileWriter::getLines(int numberOfLines, std::ifstream &input) {
     std::vector<std::string> lines;
     std::string line;
+
     for(int i = 0; i < numberOfLines; i++) {
-        getline(&input,line);
+        getline(input,line);
+        lines.push_back(line);
     }
     return lines;
 }
-*/
+
 
 
 

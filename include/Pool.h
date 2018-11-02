@@ -33,7 +33,7 @@ public:
     }
 
     void remove (std::string name) {
-        records.erase(records.find(name));
+        records.erase(std::find(records.begin(),records.end(),name));
     }
 
     bool add(T t) {

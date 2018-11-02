@@ -28,6 +28,8 @@ public:
 
     std::vector<Movie> getAllRecords();
 
+    std::vector<std::string> getLines(int numberOfLines, std::ifstream *input);
+
 };
 
 

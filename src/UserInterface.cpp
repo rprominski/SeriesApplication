@@ -46,7 +46,7 @@ void UserInterface::start() {
         getAction();
         performAction();
         wait();
-        system("clear");
+       // system("clear");
     }
 }
 
@@ -81,10 +81,14 @@ void UserInterface::removeMovie() {
     std::cout << "Type name of movie you'd like to remove \n";
     std::cin.ignore();
     std::getline(std::cin,name);
-    FileWriter fileWriter;
-    if(!fileWriter.deleteRecord(name)) {
+
+    if(!pool.exist(name)) {
         std::cout << "Movie not exists \n";
+        return;
     }
+    FileWriter fileWriter;
+    pool.remove(name);
+    fileWriter.deleteRecord(name);
 }
 
 void UserInterface::loadSavedFiles() {
@@ -96,7 +100,7 @@ void UserInterface::loadSavedFiles() {
 
 void UserInterface::wait() {
     std::cout << "Press enter to continue ...";
-    std::cin.ignore();
+   // std::cin.ignore();
     std::cin.get();
 }
 

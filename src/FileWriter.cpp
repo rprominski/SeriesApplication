@@ -31,20 +31,31 @@ void FileWriter::write(Movie data) {
 bool FileWriter::deleteRecord(std::string recordName) {
     std::ifstream input(path);
     std::ofstream copy("temp");
-    std::string s,name;
+    std::string s;
     bool find = false;
 
     while(getline(input,s)) {
-        std::stringstream ss(s);
-        ss >> name;
-        if(name != recordName) {
-            copy << s << std::endl;
+        std::vector <std::string> args;
+        int argsNumber;
+        std::string arg;
+        if(s == "Movie") {
+            argsNumber = 4;
+        }
+        for(int i = 0; i < argsNumber; i++) {
+            getline(input,arg);
+            args.push_back(arg);
+        }
+        if(recordName != args[0]) {
+            copy << s <<"\n";
+            for(auto i : args) {
+                copy << i << std::endl;
+            }
             find = true;
         }
     }
     std::rename("temp",path.c_str());
 
-    return find ? true : false;
+    return find;
 }
 
 std::vector<Movie> FileWriter::getAllRecords() {
@@ -53,6 +64,9 @@ std::vector<Movie> FileWriter::getAllRecords() {
     std::string s,data;
     while(getline(input,s)) {
         std::vector <std::string> args;
+        std::string arg;
+        int argsNumber;
+
         if(s == "Movie") {
             std::string arg;
             for(int i = 0; i < 4; i++) {
@@ -61,10 +75,21 @@ std::vector<Movie> FileWriter::getAllRecords() {
             }
             records.push_back(Movie(args));
         }
+     //   args = getLines(argsNumber,&input);
+     //   records.push_back(Movie(args));
     }
     return records;
 }
 
+/*std::vector<std::string> FileWriter::getLines(int numberOfLines, std::ifstream* input) {
+    std::vector<std::string> lines;
+    std::string line;
+    for(int i = 0; i < numberOfLines; i++) {
+        getline(&input,line);
+    }
+    return lines;
+}
+*/
 
 
 

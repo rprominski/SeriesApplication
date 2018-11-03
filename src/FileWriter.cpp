@@ -45,6 +45,9 @@ bool FileWriter::deleteRecord(std::string recordName) {
         if(s == "Movie") {
             argsNumber = 4;
         }
+        if(s == "Series") {
+            argsNumber = 6;
+        }
         for(int i = 0; i < argsNumber; i++) {
             getline(input,arg);
             args.push_back(arg);

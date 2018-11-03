@@ -32,7 +32,7 @@ public:
 
     int getRate() const;
 
-    void setRate(int rate);
+    int setRate(int rate);
 
     int getDurationInMinutes() const;
 
@@ -42,11 +42,13 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Movie& movie);
 
-    bool operator<(const Movie& m1);
+    bool operator<(const Movie* m1);
 
     virtual void print(std::ostream& os) const;
 
     virtual std::string toString();
+
+    virtual void update(int what, std::string value);
 };
 
 

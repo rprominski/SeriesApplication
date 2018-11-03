@@ -74,3 +74,15 @@ std::vector<std::string> Series::parseDays(std::string days) {
 
 Series::Series(std::vector<std::string> args) : Movie(args),
     numberOfEpisodes(stoi(args[4])), broadcastDays(parseDays(args[5])) {}
+
+void Series::update(int what, std::string value) {
+    if(what < 5) {
+        Movie::update(what,value);
+    }
+    if(what == 5) {
+        setNumberOfEpisodes(stoi(value));
+    }
+    if(what == 6) {
+        setBroadcastDays(parseDays(value));
+    }
+}

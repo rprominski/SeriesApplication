@@ -40,6 +40,8 @@ public:
 
     void print(std::ostream& os) const;
 
+    void update(int what, std::string value);
+
 };
 
 

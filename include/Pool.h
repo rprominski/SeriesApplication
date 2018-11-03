@@ -48,7 +48,12 @@ public:
     }
 
     void sort() {
-        std::sort(records.begin(),records.end());
+        std::sort(records.begin(),records.end(),comp);
+    }
+    static bool comp (Movie* m1, Movie* m2) {
+        return m1->getRate() < m2 ->getRate();
     }
 };
+
+
 #endif //SERIESAPPLICATION_POOL_H

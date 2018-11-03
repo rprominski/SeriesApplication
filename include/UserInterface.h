@@ -36,6 +36,8 @@ class UserInterface {
     void showInfoAboutMovie();
 
     void proposeMovieForWatching();
+
+    void update();
 public:
     void start();
 

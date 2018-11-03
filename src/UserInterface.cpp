@@ -13,9 +13,10 @@ void UserInterface::showOptions() {
     std::cout << "\n1.Add film\n"
         << "2.Remove film\n"
         << "3.Show all films\n"
-        << "4 Exit\n"
-        << "5 Show info about film\n"
-        << "6 Propose Movie for watching\n";
+        << "4.Exit\n"
+        << "5.Show info about film\n"
+        << "6.Propose Movie for watching\n"
+        << "7.Update \n";
 }
 
 void UserInterface::getAction() {
@@ -45,6 +46,10 @@ void UserInterface::performAction() {
 
     if(action == 6) {
         proposeMovieForWatching();
+    }
+
+    if(action == 7) {
+        update();
     }
 }
 
@@ -159,6 +164,7 @@ void UserInterface::showInfoAboutMovie() {
     std::cin.ignore();
     getline(std::cin,name);
     auto info = pool.findbyName(name);
+
     if(info == nullptr) {
         std::cout << "Movie doesn't exists\n";
         return;
@@ -168,9 +174,55 @@ void UserInterface::showInfoAboutMovie() {
 
 void UserInterface::proposeMovieForWatching() {
     pool.sort();
-//    if(pool.getRecords().size() == 0) {
-   //     std::cout << "There is no movies to watch\n";
- //       return;
-  //  }
- //   std::cout << pool.getRecords()[0];
+    if(pool.getRecords().empty()) {
+        std::cout << "There is no movies to watch\n";
+        return;
+    }
+    srand(time(NULL));
+    auto movie = pool.getRecords()[rand() % pool.getRecords().size()];
+    std::cout << "Our special AI program chase for you this film:\n" << *movie <<"\n";
+}
+
+void UserInterface::update() {
+    std::cout << "What movie do you want to update?\n";
+    std::string name;
+    std::cin.ignore();
+    getline(std::cin,name);
+    auto movie = pool.findbyName(name);
+
+    if(movie == nullptr ) {
+        std::cout << "Movie doesn't exists\n";
+        return;
+    }
+    std::cout << "What do you want update?\n"
+                 "1.Name\n"
+                 "2.Descryption\n"
+                 "3.Rate\n"
+                 "4.Duartion\n";
+    if(typeid(*movie) == typeid(Series)) {
+        std::cout << "5.Number of episodes\n"
+                     "6.Broadcast days\n";
+    }
+
+    int what = cinInt();
+    if(typeid(*movie) == typeid(Movie) && (what < 0 || what > 4)) {
+        return;
+    }
+    if(typeid(*movie) == typeid(Series) && (what < 0 || what > 6)) {
+        return;
+    }
+
+    std::string stringValue;
+    int intValue;
+    std::cout <<"New value:\n";
+    if((what >= 3) && (what <= 5)) {
+        intValue = cinInt();
+        stringValue = std::to_string(intValue);
+    } else {
+        getline(std::cin,stringValue);
+    }
+    FileWriter fileWriter;
+    fileWriter.deleteRecord(movie -> getName());
+    movie -> update(what,stringValue);
+    fileWriter.write(movie);
 }

@@ -104,6 +104,7 @@ void UserInterface::showAllMovies() {
     for(auto i : pool.getRecords()) {
         std:: cout << *i << "\n\n";
     }
+    std::cin.ignore();
 }
 
 void UserInterface::removeMovie() {

@@ -7,10 +7,14 @@
 
 Movie::Movie(const std::string &name, const std::string &description,
         int rate, int durationInMinutes) : name(name), description(description),
-        rate(setRate(rate)), durationInMinutes(durationInMinutes) {}
+         durationInMinutes(durationInMinutes) {
+    setRate(rate);
+}
 
 Movie::Movie(std::vector<std::string> &data): name(data[0]), description(data[1]),
-                                              rate(setRate(stoi(data[2]))), durationInMinutes(stoi(data[3])) {}
+                                              durationInMinutes(stoi(data[3])) {
+    setRate(stoi(data[2]));
+}
 
 Movie::Movie() {}
 
@@ -35,11 +39,11 @@ int Movie::getRate() const {
 }
 
 int Movie::setRate(int rate) {
-    Movie::rate = rate;
-    if(rate < 0) {
-        Movie::rate = 0;
-    }
-    if(rate > 10) {
+            Movie::rate = rate;
+            if(rate < 0) {
+                Movie::rate = 0;
+            }
+            if(rate > 10) {
         Movie::rate = 10;
     }
     return rate;

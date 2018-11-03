@@ -7,7 +7,12 @@
 
 Movie::Movie(const std::string &name, const std::string &description,
         int rate, int durationInMinutes) : name(name), description(description),
-        rate(rate), durationInMinutes(durationInMinutes) {}
+        rate(setRate(rate)), durationInMinutes(durationInMinutes) {}
+
+Movie::Movie(std::vector<std::string> &data): name(data[0]), description(data[1]),
+                                              rate(setRate(stoi(data[2]))), durationInMinutes(stoi(data[3])) {}
+
+Movie::Movie() {}
 
 const std::string &Movie::getName() const {
     return name;
@@ -29,7 +34,7 @@ int Movie::getRate() const {
     return rate;
 }
 
-void Movie::setRate(int rate) {
+int Movie::setRate(int rate) {
     Movie::rate = rate;
     if(rate < 0) {
         Movie::rate = 0;
@@ -37,6 +42,7 @@ void Movie::setRate(int rate) {
     if(rate > 10) {
         Movie::rate = 10;
     }
+    return rate;
 }
 
 int Movie::getDurationInMinutes() const {
@@ -55,24 +61,33 @@ std::string Movie::toString() {
     return name + "\n" + description + "\n" + std::to_string(rate) + "\n" + std::to_string(durationInMinutes);
 }
 
-Movie::Movie() {
-
-}
-
-Movie::Movie(std::vector<std::string> &data): name(data[0]), description(data[1]),
-                                              rate(stoi(data[2])), durationInMinutes(stoi(data[3])) {}
-
 std::ostream &operator<<(std::ostream &os, const Movie &movie) {
     movie.print(os);
     return os;
-}
-
-bool Movie::operator<(const Movie &m1) {
-    return m1.rate < this->getRate();
 }
 
 void Movie::print(std::ostream &os) const {
     os << "Name -> " << name << "\nDescription -> " << description << "\nRate -> " << rate
        << "\nDuration (in minutes) -> " << durationInMinutes <<"\n";
 }
+
+bool Movie::operator<(const Movie *m1) {
+    return m1->getRate() < this -> getRate();
+}
+
+void Movie::update(int what, std::string value) {
+    if(what == 1) {
+       setName(value);
+    }
+    if(what == 2) {
+        setDescription(value);
+    }
+    if(what == 3) {
+       setRate(stoi(value));
+    }
+    if(what == 4) {
+       setDurationInMinutes(stoi(value));
+    }
+}
+
 

@@ -5,13 +5,13 @@
 #include <iostream>
 #include "../include/Movie.h"
 
-Movie::Movie(const std::string &name, const std::string &description,
+Movie::Movie(std::string name, std::string description,
         int rate, int durationInMinutes) : name(name), description(description),
          durationInMinutes(durationInMinutes) {
     setRate(rate);
 }
 
-Movie::Movie(std::vector<std::string> &data): name(data[0]), description(data[1]),
+Movie::Movie(std::vector<std::string> data): name(data[0]), description(data[1]),
                                               durationInMinutes(stoi(data[3])) {
     setRate(stoi(data[2]));
 }
@@ -93,5 +93,3 @@ void Movie::update(int what, std::string value) {
        setDurationInMinutes(stoi(value));
     }
 }
-
-

@@ -23,7 +23,6 @@ public:
     T findbyName(std::string name) {
         for(auto i : records) {
             if(i -> getName() == name) {
-                //std::cout<<"YESSS";
                 return i;
             }
         }
@@ -50,8 +49,16 @@ public:
     void sort() {
         std::sort(records.begin(),records.end(),comp);
     }
+
     static bool comp (Movie* m1, Movie* m2) {
         return m1->getRate() < m2 ->getRate();
+    }
+
+    void showAll() {
+        for(auto i :records) {
+            std :: cout << i -> getName() <<"fff\n";
+            std:: cout << *i << "\n\n";
+        }
     }
 };
 

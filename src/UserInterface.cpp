@@ -16,7 +16,9 @@ void UserInterface::showOptions() {
         << "4.Exit\n"
         << "5.Show info about film\n"
         << "6.Propose Movie for watching\n"
-        << "7.Update \n";
+        << "7.Update\n"
+        << "9.Add series to following\n"
+        << "10.Show all following series\n";
 }
 
 void UserInterface::getAction() {
@@ -51,10 +53,22 @@ void UserInterface::performAction() {
     if(action == 7) {
         update();
     }
+
+    if(action == 8) {
+
+    }
+
+    if(action == 9) {
+        addSeriesToFollowing();
+    }
+
+    if(action == 10) {
+        showAllFollowing();
+    }
 }
 
 void UserInterface::start() {
-    loadSavedFiles();
+    loadSavedRecords();
     while(!end) {
         showOptions();
         getAction();
@@ -101,9 +115,13 @@ void UserInterface::addFilm() {
 
 void UserInterface::showAllMovies() {
     pool.sort();
-    for(auto i : pool.getRecords()) {
-        std:: cout << *i << "\n\n";
-    }
+    pool.showAll();
+    std::cin.ignore();
+}
+
+void UserInterface::showAllFollowing() {
+    followingSeries.sort();
+    followingSeries.showAll();
     std::cin.ignore();
 }
 
@@ -122,7 +140,7 @@ void UserInterface::removeMovie() {
     fileWriter.deleteRecord(name);
 }
 
-void UserInterface::loadSavedFiles() {
+void UserInterface::loadSavedRecords() {
 
     std::ifstream input("Database");
     std::string s,data;
@@ -137,7 +155,10 @@ void UserInterface::loadSavedFiles() {
             args = fileWriter.getLines(6,input);
             pool.add(new Series(args));
         }
-
+        if (s == "FollowingSeries")  {
+            args = fileWriter.getLines(7,input);
+            followingSeries.add(new FollowingSeries(args));
+        }
     }
 }
 
@@ -202,21 +223,31 @@ void UserInterface::update() {
                  "4.Duartion\n";
     if(typeid(*movie) == typeid(Series)) {
         std::cout << "5.Number of episodes\n"
-                     "6.Broadcast days\n";
+                     "6.Broadcast days\n"
+                     "7.Number of watched episodes";
     }
 
     int what = cinInt();
     if(typeid(*movie) == typeid(Movie) && (what < 0 || what > 4)) {
         return;
     }
-    if(typeid(*movie) == typeid(Series) && (what < 0 || what > 6)) {
-        return;
+    if(typeid(*movie) == typeid(Series)) {
+        if(what == 7) {
+            if(followingSeries.findbyName(movie->getName()) == nullptr) {
+                std::cout << "You must follow series to change number of watched episodes\n";
+                return;
+            } else {
+                movie = followingSeries.findbyName(movie->getName());
+            }
+        }
+        if (what < 0 || what > 7) {
+            return;
+        }
     }
-
     std::string stringValue;
     int intValue;
     std::cout <<"New value:\n";
-    if((what >= 3) && (what <= 5)) {
+    if(( (what >= 3) && (what <= 5) ) || what == 7) {
         intValue = cinInt();
         stringValue = std::to_string(intValue);
     } else {
@@ -226,4 +257,33 @@ void UserInterface::update() {
     fileWriter.deleteRecord(movie -> getName());
     movie -> update(what,stringValue);
     fileWriter.write(movie);
+}
+
+void UserInterface::addSeriesToFollowing() {
+    std::cout << "Give name of series:";
+    std::string name;
+    std::cin.ignore();
+    getline(std::cin,name);
+    auto series = pool.findbyName(name);
+    if(series == nullptr) {
+        std::cout << "Series not exists\n";
+        return;
+    }
+    if(typeid(FollowingSeries) == typeid(*series)) {
+        std::cout << "Series is already following\n";
+        return;
+    }
+    if(typeid(Series) != typeid(*series)) {
+        std::cout << "It is not a series\n";
+        return;
+    }
+
+    FileWriter fileWriter;
+    Series s = *dynamic_cast<Series*>((series));;
+    auto *fs = new FollowingSeries(s.getName(),s.getDescription(),s.getRate(),
+            s.getDurationInMinutes(),s.getNumberOfEpisodes(),s.getBroadcastDays(),0);
+
+   // std::cout << *fs;
+   fileWriter.write(fs);
+   followingSeries.add(fs);
 }

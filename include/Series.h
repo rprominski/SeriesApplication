@@ -11,8 +11,7 @@
 #include "DayOfWeek.h"
 #include <iostream>
 class Series : public virtual Movie {
-private:
-
+protected:
     int numberOfEpisodes;
     std::vector<std::string> broadcastDays;
 public:
@@ -24,7 +23,7 @@ public:
 
     Series(std::vector<std::string> args);
 
-    //using Movie::Movie;
+    Series();
 
     int getNumberOfEpisodes() const;
 
@@ -36,12 +35,11 @@ public:
 
     std::vector<std::string> parseDays(std::string days);
 
-    std::string toString();
+    virtual std::string toString();
 
     void print(std::ostream& os) const;
 
     void update(int what, std::string value);
-
 };
 
 

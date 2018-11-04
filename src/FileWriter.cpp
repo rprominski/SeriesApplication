@@ -3,6 +3,7 @@
 //
 
 #include "../include/FileWriter.h"
+#include "../include/FollowingSeries.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -22,6 +23,9 @@ void FileWriter::setPath(const std::string &path) {
 
 void FileWriter::write(Movie* data) {
     std::ofstream output(path,std::ios::app);
+    if(typeid(*data) == typeid(FollowingSeries)) {
+        output << "FollowingSeries\n";
+    } else
     if(typeid(*data) == typeid(Series)) {
         output << "Series\n";
     } else
@@ -47,6 +51,9 @@ bool FileWriter::deleteRecord(std::string recordName) {
         }
         if(s == "Series") {
             argsNumber = 6;
+        }
+        if(s == "FollowingSeries") {
+            argsNumber = 7;
         }
         for(int i = 0; i < argsNumber; i++) {
             getline(input,arg);

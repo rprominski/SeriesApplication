@@ -48,7 +48,6 @@ Series::Series(const std::string &name, const std::string &description, int rate
 void Series::print(std::ostream &os) const {
     std::string days;
     for(auto i : broadcastDays) {
-        std::cout << i <<"\n";
         days = days + i + " ";
     }
     os << "Name -> " << name << "\nDescription -> " << description << "\nRate -> " << rate
@@ -85,4 +84,8 @@ void Series::update(int what, std::string value) {
     if(what == 6) {
         setBroadcastDays(parseDays(value));
     }
+}
+
+Series::Series() {
+
 }

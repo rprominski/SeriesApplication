@@ -14,7 +14,7 @@ class UserInterface {
     bool end;
     int action;
     Pool <Movie*> pool;
-
+    Pool <FollowingSeries*> followingSeries;
     void getAction();
 
     void performAction();
@@ -27,7 +27,7 @@ class UserInterface {
 
     void removeMovie();
 
-    void loadSavedFiles();
+    void loadSavedRecords();
 
     void wait();
 
@@ -38,6 +38,10 @@ class UserInterface {
     void proposeMovieForWatching();
 
     void update();
+
+    void addSeriesToFollowing();
+
+    void showAllFollowing();
 public:
     void start();
 

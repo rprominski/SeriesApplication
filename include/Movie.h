@@ -16,11 +16,11 @@ protected:
     int durationInMinutes;
 
 public:
-    Movie(const std::string &name, const std::string &description, int rate, int durationInMinutes);
+    Movie(std::string name, std::string description, int rate, int durationInMinutes);
 
     Movie();
 
-    Movie(std::vector<std::string> &data);
+    Movie(std::vector<std::string> data);
 
     const std::string &getName() const;
 

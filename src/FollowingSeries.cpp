@@ -12,7 +12,7 @@ void FollowingSeries::setNumberOfWatchedEpisodes(int numberOfWatchedEpisodes) {
     FollowingSeries::numberOfWatchedEpisodes = numberOfWatchedEpisodes;
 }
 
-int FollowingSeries::CalculateTimeToEndOfSeries() {
+int FollowingSeries::calculateTimeToEndOfSeries() {
     return (getNumberOfEpisodes() - numberOfWatchedEpisodes) * durationInMinutes;
 }
 

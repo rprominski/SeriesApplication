@@ -14,7 +14,7 @@ private:
 
 public:
 
-    int CalculateTimeToEndOfSeries();
+    int calculateTimeToEndOfSeries();
 
     int getNumberOfWatchedEpisodes() const;
 

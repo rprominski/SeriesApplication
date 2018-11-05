@@ -42,6 +42,8 @@ class UserInterface {
     void addSeriesToFollowing();
 
     void showAllFollowing();
+
+    void showStatistics();
 public:
     void start();
 

@@ -17,6 +17,7 @@ void UserInterface::showOptions() {
         << "5.Show info about film\n"
         << "6.Propose Movie for watching\n"
         << "7.Update\n"
+        << "8.Print statistics of following series\n"
         << "9.Add series to following\n"
         << "10.Show all following series\n";
 }
@@ -55,7 +56,7 @@ void UserInterface::performAction() {
     }
 
     if(action == 8) {
-
+        showStatistics();
     }
 
     if(action == 9) {
@@ -283,7 +284,15 @@ void UserInterface::addSeriesToFollowing() {
     auto *fs = new FollowingSeries(s.getName(),s.getDescription(),s.getRate(),
             s.getDurationInMinutes(),s.getNumberOfEpisodes(),s.getBroadcastDays(),0);
 
-   // std::cout << *fs;
    fileWriter.write(fs);
    followingSeries.add(fs);
+}
+
+void UserInterface::showStatistics() {
+    for(auto i : followingSeries.getRecords()) {
+        int time = i->calculateTimeToEndOfSeries();
+        std::cout << i -> getName() <<"\nWatched    Episodes : " << i -> getNumberOfWatchedEpisodes() << "/"
+        <<  i -> getNumberOfEpisodes() <<"\nRemaining time: " <<time/60 << "h " << time%60 << "min\n\n";
+    }
+
 }

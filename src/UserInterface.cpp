@@ -4,6 +4,7 @@
 
 #include "../include/UserInterface.h"
 #include "../include/FileWriter.h"
+#include "../include/LiveStream.h"
 #include <iostream>
 #include <fstream>
 
@@ -66,6 +67,10 @@ void UserInterface::performAction() {
     if(action == 10) {
         showAllFollowing();
     }
+
+    if(action == 11) {
+        showComingLiveStreams();
+    }
 }
 
 void UserInterface::start() {
@@ -82,7 +87,8 @@ void UserInterface::start() {
 void UserInterface::addFilm() {
     std::cout<< "Which type would you like to add?\n"
         << "1.Movie\n"
-        << "2.Series\n";
+        << "2.Series\n"
+        << "3.Live stream\n";
 
     std::string title,description;
     int type,rate,duration;
@@ -110,6 +116,16 @@ void UserInterface::addFilm() {
         if(pool+=(new Series(title,description,rate,duration,episodes,days))) {
             FileWriter fileWriter;
             fileWriter.write(new Series(title,description,rate,duration,episodes,days));
+        }
+    }
+    if(type == 3) {
+        std::cout << "Give date in format:\nDD.MM.YYYY hh:mm\n";
+        std::string date;
+        getline(std::cin,date);
+
+        if(pool+=(new LiveStream(title,description,rate,duration,date))) {
+            FileWriter fileWriter;
+            fileWriter.write(new LiveStream(title,description,rate,duration,date));
         }
     }
 }
@@ -159,6 +175,10 @@ void UserInterface::loadSavedRecords() {
         if (s == "FollowingSeries")  {
             args = fileWriter.getLines(7,input);
             followingSeries+=(new FollowingSeries(args));
+        }
+        if (s == "LiveStream")  {
+            args = fileWriter.getLines(5,input);
+            pool+=(new LiveStream(args));
         }
     }
 }
@@ -295,4 +315,16 @@ void UserInterface::showStatistics() {
         <<  i -> getNumberOfEpisodes() <<"\nRemaining time: " <<time/60 << "h " << time%60 << "min\n\n";
     }
 
+}
+
+void UserInterface::showComingLiveStreams() {
+    std::cout << "Live streams in next 24h:\n";
+    for(auto i : pool.getRecords()) {
+        if(typeid(*i) == typeid(LiveStream)) {
+            LiveStream *ls = dynamic_cast<LiveStream*>(i);
+            if(ls -> timeToStart() <= 24) {
+                std::cout << *ls <<"\n";
+            }
+        }
+    }
 }

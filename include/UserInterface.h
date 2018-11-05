@@ -44,6 +44,8 @@ class UserInterface {
     void showAllFollowing();
 
     void showStatistics();
+
+    void showComingLiveStreams();
 public:
     void start();
 

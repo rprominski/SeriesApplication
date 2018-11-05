@@ -4,6 +4,7 @@
 
 #include "../include/FileWriter.h"
 #include "../include/FollowingSeries.h"
+#include "../include/LiveStream.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -29,6 +30,9 @@ void FileWriter::write(Movie* data) {
     if(typeid(*data) == typeid(Series)) {
         output << "Series\n";
     } else
+        if(typeid(*data) == typeid(LiveStream)) {
+            output << "LiveStream\n";
+        }
     if(typeid(*data) == typeid(Movie)) {
         output << "Movie\n";
     }

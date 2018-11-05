@@ -1,7 +1,3 @@
-//
-// Created by rafal on 25/10/18.
-//
-
 #include "../include/UserInterface.h"
 #include "../include/FileWriter.h"
 #include "../include/LiveStream.h"
@@ -12,15 +8,18 @@ UserInterface::UserInterface() : end(0) {}
 
 void UserInterface::showOptions() {
     std::cout << "\n1.Add film\n"
-        << "2.Remove film\n"
+        << "2.Add series to following\n"
         << "3.Show all films\n"
-        << "4.Exit\n"
-        << "5.Show info about film\n"
+        << "4.Remove series from following\n"
+        << "5.Remove film\n"
         << "6.Propose Movie for watching\n"
         << "7.Update\n"
         << "8.Print statistics of following series\n"
-        << "9.Add series to following\n"
-        << "10.Show all following series\n";
+        << "9.Show info about film\n"
+        << "10.Show all following series\n"
+        << "11.Show coming live streams\n"
+        << "12.Estimate the time needed to watch series\n"
+        << "13.Exit\n";
 }
 
 void UserInterface::getAction() {
@@ -33,7 +32,7 @@ void UserInterface::performAction() {
     }
 
     if(action == 2) {
-        removeMovie();
+        addSeriesToFollowing();
     }
 
     if(action == 3) {
@@ -41,11 +40,11 @@ void UserInterface::performAction() {
     }
 
     if(action == 4) {
-        end = 1;
+        removeFollowing();
     }
 
     if(action == 5) {
-        showInfoAboutMovie();
+        removeMovie();
     }
 
     if(action == 6) {
@@ -61,7 +60,7 @@ void UserInterface::performAction() {
     }
 
     if(action == 9) {
-        addSeriesToFollowing();
+        showInfoAboutMovie();
     }
 
     if(action == 10) {
@@ -70,6 +69,14 @@ void UserInterface::performAction() {
 
     if(action == 11) {
         showComingLiveStreams();
+    }
+
+    if(action == 12) {
+        estimateWeeklyTime();
+    }
+
+    if(action == 13) {
+        end = 1;
     }
 }
 
@@ -80,7 +87,6 @@ void UserInterface::start() {
         getAction();
         performAction();
         wait();
-       // system("clear");
     }
 }
 
@@ -137,14 +143,18 @@ void UserInterface::showAllMovies() {
 }
 
 void UserInterface::showAllFollowing() {
-    followingSeries.sort();
-    followingSeries.showAll();
+    pool.sort();
+    for(auto i : pool.getRecords()) {
+        if(typeid(i) == typeid(FollowingSeries)) {
+            std::cout <<*i <<"\n";
+        }
+    }
     std::cin.ignore();
 }
 
 void UserInterface::removeMovie() {
     std::string name;
-    std::cout << "Type name of movie you'd like to remove \n";
+    std::cout << "Give a name of movie you'd like to remove \n";
     std::cin.ignore();
     std::getline(std::cin,name);
 
@@ -174,7 +184,7 @@ void UserInterface::loadSavedRecords() {
         }
         if (s == "FollowingSeries")  {
             args = fileWriter.getLines(7,input);
-            followingSeries+=(new FollowingSeries(args));
+            pool+=(new FollowingSeries(args));
         }
         if (s == "LiveStream")  {
             args = fileWriter.getLines(5,input);
@@ -244,26 +254,21 @@ void UserInterface::update() {
                  "4.Duartion\n";
     if(typeid(*movie) == typeid(Series)) {
         std::cout << "5.Number of episodes\n"
+                     "6.Broadcast days\n";
+
+    }
+    if(typeid(*movie) == typeid(FollowingSeries)) {
+        std::cout << "5.Number of episodes\n"
                      "6.Broadcast days\n"
-                     "7.Number of watched episodes";
+                     "7.Number of watched episodes\n";
     }
 
     int what = cinInt();
     if(typeid(*movie) == typeid(Movie) && (what < 0 || what > 4)) {
         return;
     }
-    if(typeid(*movie) == typeid(Series)) {
-        if(what == 7) {
-            if(followingSeries.findbyName(movie->getName()) == nullptr) {
-                std::cout << "You must follow series to change number of watched episodes\n";
-                return;
-            } else {
-                movie = followingSeries.findbyName(movie->getName());
-            }
-        }
-        if (what < 0 || what > 7) {
-            return;
-        }
+    if((typeid(*movie) == typeid(Series)) && (what < 0 || what > 6)) {
+        return;
     }
     std::string stringValue;
     int intValue;
@@ -286,7 +291,7 @@ void UserInterface::addSeriesToFollowing() {
     std::cin.ignore();
     getline(std::cin,name);
     auto series = pool.findbyName(name);
-    if(series == nullptr) {
+    if(series == nullptr) { std::cout <<"@"<<name<<"@"<<"\n";
         std::cout << "Series not exists\n";
         return;
     }
@@ -300,21 +305,26 @@ void UserInterface::addSeriesToFollowing() {
     }
 
     FileWriter fileWriter;
-    Series s = *dynamic_cast<Series*>((series));;
+    Series s = *dynamic_cast<Series*>(series);
     auto *fs = new FollowingSeries(s.getName(),s.getDescription(),s.getRate(),
             s.getDurationInMinutes(),s.getNumberOfEpisodes(),s.getBroadcastDays(),0);
 
-   fileWriter.write(fs);
-   followingSeries += (fs);
+    fileWriter.deleteRecord(name);
+    fileWriter.write(fs);
+    pool.remove(name);
+    pool += (fs);
 }
 
 void UserInterface::showStatistics() {
-    for(auto i : followingSeries.getRecords()) {
-        int time = i->calculateTimeToEndOfSeries();
-        std::cout << i -> getName() <<"\nWatched    Episodes : " << i -> getNumberOfWatchedEpisodes() << "/"
-        <<  i -> getNumberOfEpisodes() <<"\nRemaining time: " <<time/60 << "h " << time%60 << "min\n\n";
+    for(auto i : pool.getRecords()) {
+        if(typeid(*i) == typeid(FollowingSeries)) {
+            auto * fs = dynamic_cast<FollowingSeries*>(i);
+            int time = fs->calculateTimeToEndOfSeries();
+            std::cout << fs->getName() << "\nWatched    Episodes : " << fs->getNumberOfWatchedEpisodes() << "/"
+                      << fs->getNumberOfEpisodes() << "\nRemaining time: " << time / 60 << "h " << time % 60
+                      << "min\n\n";
+        }
     }
-
 }
 
 void UserInterface::showComingLiveStreams() {
@@ -328,3 +338,36 @@ void UserInterface::showComingLiveStreams() {
         }
     }
 }
+
+void UserInterface::estimateWeeklyTime() {
+    int time = 0;
+    for(auto i : pool.getRecords()) {
+        if(typeid(*i) == typeid(FollowingSeries)) {
+            FollowingSeries* fs = dynamic_cast<FollowingSeries*>(i);
+            time += (fs->getDurationInMinutes() * fs->getBroadcastDays().size());
+        }
+    }
+    std::cout << "You need " << time/60 << "h " << time%60 <<"m per week to watch all your following series\n";
+    std::cin.ignore();
+}
+
+void UserInterface::removeFollowing() {
+    std::string name;
+    std::cout << "Give a name of movie you'd like to remove \n";
+    std::cin.ignore();
+    std::getline(std::cin,name);
+
+    if(pool.findbyName(name) == nullptr) {
+        std::cout << "Movie not exists \n";
+        return;
+    }
+    Series s = *dynamic_cast<Series *>(pool.findbyName(name));
+    auto *fs = new Series(s.getName(),s.getDescription(),s.getRate(),
+                                   s.getDurationInMinutes(),s.getNumberOfEpisodes(),s.getBroadcastDays());
+    FileWriter fileWriter;
+    pool.remove(name);
+    pool.add(fs);
+    fileWriter.deleteRecord(name);
+    fileWriter.write(fs);
+}
+

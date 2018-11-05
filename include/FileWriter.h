@@ -1,16 +1,12 @@
-//
-// Created by rafal on 19/10/18.
-//
-
 #ifndef SERIESAPPLICATION_FILEWRITER_H
 #define SERIESAPPLICATION_FILEWRITER_H
 #include <string>
 #include <vector>
 #include "Movie.h"
 #include "Series.h"
+
 class FileWriter {
 private:
-
     std::string path;
 
 public:

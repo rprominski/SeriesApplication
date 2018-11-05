@@ -1,9 +1,6 @@
-//
-// Created by rafal on 05.11.18.
-//
-
 #include "../include/LiveStream.h"
 #include <iomanip>
+
 std::chrono::time_point<std::chrono::system_clock> LiveStream::getStartDate() const {
     return startDate;
 }
@@ -17,8 +14,8 @@ LiveStream::LiveStream(const std::string &name, const std::string &description, 
                        Movie(name, description, rate, durationInMinutes), startDate(stringToChrono(startDate)) {}
 
 void LiveStream::print(std::ostream &os) const {
-    Movie::print(os);
-    //os << startDate <<"\n";
+    os << "Name -> " << name << "\nDescription -> " << description << "\nRate -> " << rate
+       << "\nDate: " << stringDate << "\n";
 }
 
 std::string LiveStream::toString() {
@@ -36,7 +33,7 @@ std::chrono::time_point<std::chrono::system_clock> LiveStream::stringToChrono(st
 }
 
 int LiveStream::timeToStart() {
-    auto end = std::chrono::system_clock::now();
-    auto hours = std::chrono::duration_cast<std::chrono::hours>(end - startDate);
+    auto now = std::chrono::system_clock::now();
+    auto hours = std::chrono::duration_cast<std::chrono::hours>(startDate - now);
     return hours.count();
 }

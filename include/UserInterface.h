@@ -14,7 +14,6 @@ class UserInterface {
     bool end;
     int action;
     Pool <Movie*> pool;
-    Pool <FollowingSeries*> followingSeries;
     void getAction();
 
     void performAction();
@@ -46,6 +45,11 @@ class UserInterface {
     void showStatistics();
 
     void showComingLiveStreams();
+
+    void estimateWeeklyTime();
+
+    void removeFollowing();
+
 public:
     void start();
 

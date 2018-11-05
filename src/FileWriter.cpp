@@ -1,7 +1,3 @@
-//
-// Created by rafal on 19/10/18.
-//
-
 #include "../include/FileWriter.h"
 #include "../include/FollowingSeries.h"
 #include "../include/LiveStream.h"

@@ -1,13 +1,9 @@
-//
-// Created by rafal on 05.11.18.
-//
-
 #ifndef SERIESAPPLICATION_LIVESTREAMING_H
 #define SERIESAPPLICATION_LIVESTREAMING_H
 
-
 #include "Movie.h"
 #include <chrono>
+
 class LiveStream : public Movie{
     std::string stringDate;
     std::chrono::time_point<std::chrono::system_clock> startDate;

@@ -1,7 +1,3 @@
-//
-// Created by rafal on 19/10/18.
-//
-
 #ifndef SERIESAPPLICATION_MOVIE_H
 #define SERIESAPPLICATION_MOVIE_H
 

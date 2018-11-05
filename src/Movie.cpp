@@ -1,7 +1,3 @@
-//
-// Created by rafal on 19/10/18.
-//
-
 #include <iostream>
 #include "../include/Movie.h"
 

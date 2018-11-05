@@ -1,19 +1,16 @@
-//
-// Created by rafal on 19/10/18.
-//
-
 #ifndef SERIESAPPLICATION_SERIES_H
 #define SERIESAPPLICATION_SERIES_H
 
 #include <vector>
 #include <string>
 #include "Movie.h"
-#include "DayOfWeek.h"
 #include <iostream>
+
 class Series : public virtual Movie {
 protected:
     int numberOfEpisodes;
     std::vector<std::string> broadcastDays;
+
 public:
     Series(const std::string &name, const std::string &description, int rate, int durationInMinutes,
            int numberOfEpisodes, const std::vector<std::string> &broadcastDays);

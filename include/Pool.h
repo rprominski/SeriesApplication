@@ -1,9 +1,5 @@
-//
-// Created by rafal on 20/10/18.
-//
 #include <vector>
 #include "Movie.h"
-#include <bits/unique_ptr.h>
 #include <iostream>
 #include <algorithm>
 

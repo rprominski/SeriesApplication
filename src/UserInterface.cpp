@@ -94,7 +94,7 @@ void UserInterface::addFilm() {
     if(type == 1) {
         std::cout<<"Duration (in minutes): "; duration = cinInt();
 
-        if(pool.add(new Movie(title,description,rate,duration))) {
+        if(pool+=(new Movie(title,description,rate,duration))) {
             FileWriter fileWriter;
             fileWriter.write(new Movie(title,description,rate,duration));
         }
@@ -107,7 +107,7 @@ void UserInterface::addFilm() {
         std::cout<<"Number of episodes: "; episodes = cinInt();
         std::cout<<"Broadcast days, possible values : \n"
                    "monday tuesday wednesday thursday friday saturday sunday\n"; getline(std::cin,days);
-        if(pool.add(new Series(title,description,rate,duration,episodes,days))) {
+        if(pool+=(new Series(title,description,rate,duration,episodes,days))) {
             FileWriter fileWriter;
             fileWriter.write(new Series(title,description,rate,duration,episodes,days));
         }
@@ -150,15 +150,15 @@ void UserInterface::loadSavedRecords() {
         std::vector<std::string> args;
         if (s == "Movie") {
             args = fileWriter.getLines(4,input);
-            pool.add(new Movie(args));
+            pool+=(new Movie(args));
         }
         if (s == "Series") {
             args = fileWriter.getLines(6,input);
-            pool.add(new Series(args));
+            pool+=(new Series(args));
         }
         if (s == "FollowingSeries")  {
             args = fileWriter.getLines(7,input);
-            followingSeries.add(new FollowingSeries(args));
+            followingSeries+=(new FollowingSeries(args));
         }
     }
 }
@@ -285,7 +285,7 @@ void UserInterface::addSeriesToFollowing() {
             s.getDurationInMinutes(),s.getNumberOfEpisodes(),s.getBroadcastDays(),0);
 
    fileWriter.write(fs);
-   followingSeries.add(fs);
+   followingSeries += (fs);
 }
 
 void UserInterface::showStatistics() {

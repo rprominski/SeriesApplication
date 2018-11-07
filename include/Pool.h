@@ -52,7 +52,7 @@ public:
 
     void showAll() {
         for(auto i :records) {
-            std :: cout << i -> getName() <<"fff\n";
+            std :: cout << i -> getName() <<"\n";
             std:: cout << *i << "\n\n";
         }
     }

@@ -18,8 +18,7 @@ void UserInterface::showOptions() {
         << "9.Show info about film\n"
         << "10.Show all following series\n"
         << "11.Show coming live streams\n"
-        << "12.Estimate the time needed to watch series\n"
-        << "13.Exit\n";
+        << "12.Exit\n";
 }
 
 void UserInterface::getAction() {
@@ -72,10 +71,6 @@ void UserInterface::performAction() {
     }
 
     if(action == 12) {
-        estimateWeeklyTime();
-    }
-
-    if(action == 13) {
         end = 1;
     }
 }
@@ -145,7 +140,7 @@ void UserInterface::showAllMovies() {
 void UserInterface::showAllFollowing() {
     pool.sort();
     for(auto i : pool.getRecords()) {
-        if(typeid(i) == typeid(FollowingSeries)) {
+        if(typeid(*i) == typeid(FollowingSeries)) {
             std::cout <<*i <<"\n";
         }
     }
@@ -291,7 +286,7 @@ void UserInterface::addSeriesToFollowing() {
     std::cin.ignore();
     getline(std::cin,name);
     auto series = pool.findbyName(name);
-    if(series == nullptr) { std::cout <<"@"<<name<<"@"<<"\n";
+    if(series == nullptr) {
         std::cout << "Series not exists\n";
         return;
     }
@@ -325,6 +320,7 @@ void UserInterface::showStatistics() {
                       << "min\n\n";
         }
     }
+    estimateWeeklyTime();
 }
 
 void UserInterface::showComingLiveStreams() {
@@ -337,6 +333,7 @@ void UserInterface::showComingLiveStreams() {
             }
         }
     }
+    std::cin.ignore();
 }
 
 void UserInterface::estimateWeeklyTime() {

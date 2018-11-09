@@ -3,6 +3,7 @@
 #include "../include/LiveStream.h"
 #include <iostream>
 #include <fstream>
+#include <map>
 
 UserInterface::UserInterface() : end(0) {}
 
@@ -12,7 +13,7 @@ void UserInterface::showOptions() {
         << "3.Show all films\n"
         << "4.Remove series from following\n"
         << "5.Remove film\n"
-        << "6.Propose Movie for watching\n"
+        << "6.Propose something to watching\n"
         << "7.Update\n"
         << "8.Print statistics of following series\n"
         << "9.Show info about film\n"
@@ -311,6 +312,7 @@ void UserInterface::addSeriesToFollowing() {
 }
 
 void UserInterface::showStatistics() {
+    std::map <std::string,int> seriesPerDay;
     for(auto i : pool.getRecords()) {
         if(typeid(*i) == typeid(FollowingSeries)) {
             auto * fs = dynamic_cast<FollowingSeries*>(i);
@@ -318,9 +320,16 @@ void UserInterface::showStatistics() {
             std::cout << fs->getName() << "\nWatched    Episodes : " << fs->getNumberOfWatchedEpisodes() << "/"
                       << fs->getNumberOfEpisodes() << "\nRemaining time: " << time / 60 << "h " << time % 60
                       << "min\n\n";
+            for(auto j : fs->getBroadcastDays()) {
+                seriesPerDay[j]++;
+            }
         }
     }
     estimateWeeklyTime();
+    std::cout << "\nNumber of following series in each day of week:\n";
+    for(auto i : seriesPerDay ) {
+        std::cout << i.first <<" " <<i.second <<"\n";
+    }
 }
 
 void UserInterface::showComingLiveStreams() {

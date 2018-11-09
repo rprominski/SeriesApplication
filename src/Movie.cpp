@@ -35,13 +35,7 @@ int Movie::getRate() const {
 }
 
 int Movie::setRate(int rate) {
-            Movie::rate = rate;
-            if(rate < 0) {
-                Movie::rate = 0;
-            }
-            if(rate > 10) {
-        Movie::rate = 10;
-    }
+    Movie::rate = rate;
     return rate;
 }
 

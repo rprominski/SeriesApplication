@@ -64,7 +64,7 @@ void MovieFacade::addFilm() {
     DataCollector dataCollector;
     auto record = dataCollector.newMovie();
 
-    pool.add(record);
+    pool += (record);
     FileWriter fileWriter;
     fileWriter.write(record);
 }
@@ -74,10 +74,9 @@ void MovieFacade::removeMovie() {
     name = InputValidator::iGetline("Give a name of movie you'd like to remove \n");
 
     if(pool.findByName(name) == nullptr) {
-        std::cout << "Movie not exists \n";
-        return;
+        throw std::string("Movie not exists \n");
     }
-    pool.remove(name);
+    pool -= (name);
     FileWriter fileWriter;
     fileWriter.deleteRecord(name);
 }
@@ -93,9 +92,35 @@ void MovieFacade::removeFollowing() {
     Series s = *dynamic_cast<Series *>(pool.findByName(name));
     auto *fs = new Series(s.getName(),s.getDescription(),s.getRate(),
                           s.getDurationInMinutes(),s.getNumberOfEpisodes(),s.getBroadcastDays());
-    pool.remove(name);
-    pool.add(fs);
+    pool -= (name);
+    pool += (fs);
     FileWriter fileWriter;
     fileWriter.deleteRecord(name);
     fileWriter.write(fs);
+}
+
+void MovieFacade::addSeriesToFollowing() {
+    std::string name;
+
+    name = InputValidator::iGetline("Give name of series:\n");
+    auto series = pool.findByName(name);
+    if(series == nullptr) {
+        throw std::string("Series not exists");
+    }
+    if(typeid(FollowingSeries) == typeid(*series)) {
+        throw std::string("Series is already following");
+    }
+    if(typeid(Series) != typeid(*series)) {
+        throw std::string("It is not a series\n");
+    }
+
+    FileWriter fileWriter;
+    Series s = *dynamic_cast<Series*>(series);
+    auto *fs = new FollowingSeries(s.getName(),s.getDescription(),s.getRate(),
+                                   s.getDurationInMinutes(),s.getNumberOfEpisodes(),s.getBroadcastDays(),0);
+
+    fileWriter.deleteRecord(name);
+    fileWriter.write(fs);
+    pool -= (name);
+    pool += (fs);
 }

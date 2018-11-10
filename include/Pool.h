@@ -55,8 +55,13 @@ public:
             std:: cout << *i << "\n\n";
         }
     }
+
     bool operator += (T m) {
         return add(m);
+    };
+
+    bool operator -= (std::string name) {
+        return remove(name);
     };
 };
 

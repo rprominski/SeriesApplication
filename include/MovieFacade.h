@@ -33,6 +33,8 @@ public:
     void removeFollowing();
 
     void getAll();
+
+    void addSeriesToFollowing();
 };
 
 

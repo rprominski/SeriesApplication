@@ -29,10 +29,6 @@ class UserInterface {
 
     void proposeMovieForWatching();
 
-    void update();
-
-    void addSeriesToFollowing();
-
     void showAllFollowing();
 
     void showStatistics();

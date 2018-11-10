@@ -31,7 +31,7 @@ void UserInterface::getAction() {
 void UserInterface::performAction() {
     switch (action) {
         case 1: movieFacade -> addFilm(); break;
-        case 2: addSeriesToFollowing(); break;
+        case 2: movieFacade -> addSeriesToFollowing(); break;
         case 3: movieFacade -> getAll(); break;
         case 4: movieFacade -> removeFollowing(); break;
         case 5: movieFacade -> removeMovie(); break;
@@ -42,6 +42,7 @@ void UserInterface::performAction() {
         case 10: showAllFollowing(); break;
         case 11: showComingLiveStreams(); break;
         case 12: end = 1; break;
+        default: break;
     }
 }
 
@@ -93,36 +94,6 @@ void UserInterface::proposeMovieForWatching() {
     srand(time(NULL));
     auto movie = pool.getRecords()[rand() % pool.getRecords().size()];
     std::cout << "Our special AI program chase for you this film:\n" << *movie <<"\n";
-}
-
-void UserInterface::addSeriesToFollowing() {
-    std::cout << "Give name of series:";
-    std::string name;
-    std::cin.ignore();
-    getline(std::cin,name);
-    auto series = pool.findByName(name);
-    if(series == nullptr) {
-        std::cout << "Series not exists\n";
-        return;
-    }
-    if(typeid(FollowingSeries) == typeid(*series)) {
-        std::cout << "Series is already following\n";
-        return;
-    }
-    if(typeid(Series) != typeid(*series)) {
-        std::cout << "It is not a series\n";
-        return;
-    }
-
-    FileWriter fileWriter;
-    Series s = *dynamic_cast<Series*>(series);
-    auto *fs = new FollowingSeries(s.getName(),s.getDescription(),s.getRate(),
-            s.getDurationInMinutes(),s.getNumberOfEpisodes(),s.getBroadcastDays(),0);
-
-    fileWriter.deleteRecord(name);
-    fileWriter.write(fs);
-    pool.remove(name);
-    pool += (fs);
 }
 
 void UserInterface::showStatistics() {

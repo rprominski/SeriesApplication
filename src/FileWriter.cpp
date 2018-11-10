@@ -55,11 +55,15 @@ bool FileWriter::deleteRecord(std::string recordName) {
         if(s == "FollowingSeries") {
             argsNumber = 7;
         }
+        if(s == "LiveStream") {
+            argsNumber = 5;
+        }
         for(int i = 0; i < argsNumber; i++) {
             getline(input,arg);
             args.push_back(arg);
         }
         if(recordName != args[0]) {
+            std::cout << s <<"\n";
             copy << s <<"\n";
             for(auto i : args) {
                 copy << i << std::endl;

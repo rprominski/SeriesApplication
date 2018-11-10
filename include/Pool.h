@@ -16,7 +16,7 @@ public:
         return records;
     }
 
-    T findbyName(std::string name) {
+    T findByName(std::string name) {
         for(auto i : records) {
             if(i -> getName() == name) {
                 return i;
@@ -34,9 +34,8 @@ public:
     }
 
     bool add(T t) {
-        if(findbyName(t -> getName()) != nullptr) {
-            std::cout << "Record with this name already exists" << std::endl;
-            return false;
+        if(findByName(t->getName()) != nullptr) {
+            throw std::string("Record with this name already exists\n");
         }
         records.push_back(t);
         return true;

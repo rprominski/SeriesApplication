@@ -9,28 +9,21 @@
 #include "Movie.h"
 #include "Pool.h"
 #include "FollowingSeries.h"
+#include "MovieFacade.h"
 
 class UserInterface {
     bool end;
     int action;
     Pool <Movie*> pool;
+    MovieFacade *movieFacade = &MovieFacade::getInstance();
+
     void getAction();
 
     void performAction();
 
     void showOptions();
 
-    void addFilm();
-
-    void showAllMovies();
-
-    void removeMovie();
-
-    void loadSavedRecords();
-
     void wait();
-
-    int cinInt();
 
     void showInfoAboutMovie();
 
@@ -47,8 +40,6 @@ class UserInterface {
     void showComingLiveStreams();
 
     void estimateWeeklyTime();
-
-    void removeFollowing();
 
 public:
     void start();

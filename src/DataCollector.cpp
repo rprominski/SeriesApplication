@@ -10,7 +10,7 @@
 #include "../include/LiveStream.h"
 
 Movie *DataCollector::newMovie() {
-    std::cout<< "Which type would you like to add?\n1.Movie\n2.Series\n3.Live stream";
+    std::cout<< "Which type would you like to add?\n1.Movie\n2.Series\n3.Live stream\n";
     std::string title,description;
     int type,rate,duration;
     InputValidator iv;

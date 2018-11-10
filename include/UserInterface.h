@@ -10,12 +10,14 @@
 #include "Pool.h"
 #include "FollowingSeries.h"
 #include "MovieFacade.h"
+#include "EventsReminder.h"
 
 class UserInterface {
     bool end;
     int action;
     Pool <Movie*> pool;
     MovieFacade *movieFacade = &MovieFacade::getInstance();
+    EventsReminder eventsReminder;
 
     void getAction();
 

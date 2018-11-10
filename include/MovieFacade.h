@@ -32,7 +32,7 @@ public:
 
     void removeFollowing();
 
-    void getAll();
+    std::vector<Movie*>* getAllMovies();
 
     void addSeriesToFollowing();
 };

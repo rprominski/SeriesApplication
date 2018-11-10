@@ -55,9 +55,8 @@ void MovieFacade::loadDatabase() {
     }
 }
 
-void MovieFacade::getAll() {
-    pool.sort();
-    pool.showAll();
+std::vector<Movie*>* MovieFacade::getAllMovies() {
+    return const_cast<std::vector<Movie *> *>(&pool.getRecords());
 }
 
 void MovieFacade::addFilm() {

@@ -60,8 +60,8 @@ public:
         return add(m);
     };
 
-    bool operator -= (std::string name) {
-        return remove(name);
+    void operator -= (std::string name) {
+        remove(name);
     };
 };
 

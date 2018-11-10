@@ -10,6 +10,7 @@
 UserInterface::UserInterface() : end(0) {}
 
 void UserInterface::showOptions() {
+    eventsReminder.remindeInNext24H();
     std::cout << "\n1.Add film\n"
         << "2.Add series to following\n"
         << "3.Show all films\n"
@@ -32,7 +33,7 @@ void UserInterface::performAction() {
     switch (action) {
         case 1: movieFacade -> addFilm(); break;
         case 2: movieFacade -> addSeriesToFollowing(); break;
-        case 3: movieFacade -> getAll(); break;
+        case 3: movieFacade -> getAllMovies(); break;
         case 4: movieFacade -> removeFollowing(); break;
         case 5: movieFacade -> removeMovie(); break;
         case 6: proposeMovieForWatching(); break;
@@ -40,7 +41,6 @@ void UserInterface::performAction() {
         case 8: showStatistics(); break;
         case 9: showInfoAboutMovie();break;
         case 10: showAllFollowing(); break;
-        case 11: showComingLiveStreams(); break;
         case 12: end = 1; break;
         default: break;
     }
@@ -115,19 +115,6 @@ void UserInterface::showStatistics() {
     for(auto i : seriesPerDay ) {
         std::cout << i.first <<" " <<i.second <<"\n";
     }
-}
-
-void UserInterface::showComingLiveStreams() {
-    std::cout << "Live streams in next 24h:\n";
-    for(auto i : pool.getRecords()) {
-        if(typeid(*i) == typeid(LiveStream)) {
-            LiveStream *ls = dynamic_cast<LiveStream*>(i);
-            if(ls -> timeToStart() <= 24) {
-                std::cout << *ls <<"\n";
-            }
-        }
-    }
-    std::cin.ignore();
 }
 
 void UserInterface::estimateWeeklyTime() {

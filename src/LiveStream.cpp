@@ -31,9 +31,3 @@ std::chrono::time_point<std::chrono::system_clock> LiveStream::stringToChrono(st
     ss >> std::get_time(&tm, "%d.%m.%Y %H:%M");
     return std::chrono::system_clock::from_time_t(std::mktime(&tm));
 }
-
-int LiveStream::timeToStart() {
-    auto now = std::chrono::system_clock::now();
-    auto hours = std::chrono::duration_cast<std::chrono::hours>(startDate - now);
-    return hours.count();
-}

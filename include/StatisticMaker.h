@@ -5,6 +5,8 @@
 #ifndef SERIESAPPLICATION_STATISTICMAKER_H
 #define SERIESAPPLICATION_STATISTICMAKER_H
 
+#include <map>
+#include <string>
 
 class StatisticMaker {
 
@@ -15,6 +17,8 @@ class StatisticMaker {
     void showWeeklyTimeForFolling();
 
 public:
+    std::map<std::string,int> makeStatisticSeriesPerDay();
+
     void showAll();
 
 };

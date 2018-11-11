@@ -5,7 +5,7 @@
 #include "../include/StatisticMaker.h"
 #include "../include/MovieFacade.h"
 #include "../include/FollowingSeries.h"
-#include <map>
+
 void StatisticMaker::showRemainingTimeOfFollowing() {
     for(auto i : *MovieFacade::getInstance().getAllMovies()) {
         if(typeid(*i) == typeid(FollowingSeries)) {
@@ -19,7 +19,7 @@ void StatisticMaker::showRemainingTimeOfFollowing() {
 }
 
 void StatisticMaker::showNumberOfFollowingSeriesPerDay() {
-    std::map<std::string, int> seriesPerDay;
+    std::map<std::string, int> seriesPerDay = makeStatisticSeriesPerDay();
 
     for (auto i : *MovieFacade::getInstance().getAllMovies()) {
         if (typeid(*i) == typeid(FollowingSeries)) {
@@ -48,8 +48,24 @@ void StatisticMaker::showWeeklyTimeForFolling() {
     std::cin.ignore();
 }
 
+std::map<std::string, int> StatisticMaker::makeStatisticSeriesPerDay() {
+    std::map<std::string, int> seriesPerDay;
+
+    for (auto i : *MovieFacade::getInstance().getAllMovies()) {
+        if (typeid(*i) == typeid(FollowingSeries)) {
+            auto *fs = dynamic_cast<FollowingSeries*>(i);
+            for (auto j : fs->getBroadcastDays()) {
+                seriesPerDay[j]++;
+            }
+        }
+    }
+    return seriesPerDay;
+}
+
 void StatisticMaker::showAll() {
     showRemainingTimeOfFollowing();
     showNumberOfFollowingSeriesPerDay();
     showWeeklyTimeForFolling();
 }
+
+

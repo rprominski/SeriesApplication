@@ -37,7 +37,7 @@ void UserInterface::performAction() {
         case 4: movieFacade -> removeFollowing(); break;
         case 5: movieFacade -> removeMovie(); break;
         case 6: movieFacade -> update(); break;
-        case 7: proposeMovieForWatching(); break;
+        case 7: movieProposer.proposeSomethingToWatch(); break;
         case 8: statisticMaker.showAll(); break;
         case 9: MoviePrinter::showOne();break;
         case 10: MoviePrinter::showAllFollowing(); break;
@@ -59,15 +59,4 @@ void UserInterface::start() {
 void UserInterface::wait() {
     std::cout << "Press enter to continue ...";
     std::cin.get();
-}
-
-void UserInterface::proposeMovieForWatching() {
-    pool.sortByRate();
-    if(pool.getRecords().empty()) {
-        std::cout << "There is no movies to watch\n";
-        return;
-    }
-    srand(time(NULL));
-    auto movie = pool.getRecords()[rand() % pool.getRecords().size()];
-    std::cout << "Our special AI program chase for you this film:\n" << *movie <<"\n";
 }

@@ -12,6 +12,7 @@
 #include "MovieFacade.h"
 #include "EventsReminder.h"
 #include "StatisticMaker.h"
+#include "MovieProposer.h"
 
 class UserInterface {
     bool end;
@@ -20,6 +21,7 @@ class UserInterface {
     MovieFacade *movieFacade = &MovieFacade::getInstance();
     EventsReminder eventsReminder;
     StatisticMaker statisticMaker;
+    MovieProposer movieProposer;
 
     void getAction();
 
@@ -28,18 +30,6 @@ class UserInterface {
     void showOptions();
 
     void wait();
-
-    void showInfoAboutMovie();
-
-    void proposeMovieForWatching();
-
-    void showAllFollowing();
-
-    void showStatistics();
-
-    void showComingLiveStreams();
-
-    void estimateWeeklyTime();
 
 public:
     void start();

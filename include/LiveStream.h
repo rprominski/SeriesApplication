@@ -7,12 +7,9 @@
 class LiveStream : public Movie{
     std::string stringDate;
     std::chrono::time_point<std::chrono::system_clock> startDate;
-
     std::chrono::time_point<std::chrono::system_clock> stringToChrono(std::string date);
 
 public:
-
-    int timeToStart();
 
     std::chrono::time_point<std::chrono::system_clock> getStartDate() const;
 
@@ -22,6 +19,8 @@ public:
                std::string startDate);
 
     void print(std::ostream& os) const;
+
+    void update(int what, std::string value);
 
     std::string toString();
 

@@ -1,5 +1,6 @@
 #include "../include/LiveStream.h"
 #include <iomanip>
+#include <iostream>
 
 std::chrono::time_point<std::chrono::system_clock> LiveStream::getStartDate() const {
     return startDate;
@@ -30,4 +31,15 @@ std::chrono::time_point<std::chrono::system_clock> LiveStream::stringToChrono(st
     std::stringstream ss(date);
     ss >> std::get_time(&tm, "%d.%m.%Y %H:%M");
     return std::chrono::system_clock::from_time_t(std::mktime(&tm));
+}
+
+void LiveStream::update(int what, std::string value) {
+    std::cout<<what<<" "<<value<<"\n";
+    if(what < 5) {
+        Movie::update(what,value);
+    }
+    if(what == 5) {
+        setStartDate(stringToChrono(value));
+        stringDate = value;
+    }
 }

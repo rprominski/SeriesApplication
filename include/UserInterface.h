@@ -11,6 +11,7 @@
 #include "FollowingSeries.h"
 #include "MovieFacade.h"
 #include "EventsReminder.h"
+#include "StatisticMaker.h"
 
 class UserInterface {
     bool end;
@@ -18,6 +19,7 @@ class UserInterface {
     Pool <Movie*> pool;
     MovieFacade *movieFacade = &MovieFacade::getInstance();
     EventsReminder eventsReminder;
+    StatisticMaker statisticMaker;
 
     void getAction();
 

@@ -46,7 +46,7 @@ void Series::print(std::ostream &os) const {
     for(auto i : broadcastDays) {
         days = days + i + " ";
     }
-    os << "Name -> " << name << "\nDescription -> " << description << "\nRate -> " << rate
+    os << "Name -> @" << name << "@\nDescription -> " << description << "\nRate -> " << rate
        << "\nDuration (in minutes) -> " << durationInMinutes <<"\nNumber of episodes -> "
        << numberOfEpisodes << "\nBroadcast days -> "
        << days <<"\n";

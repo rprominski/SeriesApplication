@@ -14,7 +14,7 @@ class StatisticMaker {
 
     void showNumberOfFollowingSeriesPerDay();
 
-    void showWeeklyTimeForFolling();
+    void showWeeklyTimeForFollowing();
 
 public:
     std::map<std::string,int> makeStatisticSeriesPerDay();

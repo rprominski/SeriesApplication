@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "../include/InputValidator.h"
-#include "../include/MessagePrinter.h"
 
 int InputValidator::cinInt(std::string message) {
     std::cout << message;
@@ -15,8 +14,7 @@ int InputValidator::cinInt(std::string message) {
             number = stoi(s);
             return number;
         } catch (std::exception &ex) {
-            MessagePrinter mp;
-            mp.badInt(); mp.again();
+                std::cout << "You must give a number.\nTry again\n";
         }
     }
 }

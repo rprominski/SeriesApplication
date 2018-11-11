@@ -24,11 +24,11 @@ void StatisticMaker::showNumberOfFollowingSeriesPerDay() {
     std::cout << "Number of following series in each day of week:"
             << "\nmonday: " << seriesPerDay["monday"] << "\ntuesday: " << seriesPerDay["tuesday"]
             << "\nwednesday: " << seriesPerDay["wednesday"] << "\nthursday: " << seriesPerDay["thursday"]
-            << "\nfirday: " << seriesPerDay["friday"] << "\nsaturday: " << seriesPerDay["saturday"]
+            << "\nfriday: " << seriesPerDay["friday"] << "\nsaturday: " << seriesPerDay["saturday"]
             << "\nsunday: " << seriesPerDay["sunday"] << "\n\n";
 }
 
-void StatisticMaker::showWeeklyTimeForFolling() {
+void StatisticMaker::showWeeklyTimeForFollowing() {
     int time = 0;
     for(auto i : *MovieFacade::getInstance().getAllMovies()) {
         if(typeid(*i) == typeid(FollowingSeries)) {
@@ -56,7 +56,7 @@ std::map<std::string, int> StatisticMaker::makeStatisticSeriesPerDay() {
 void StatisticMaker::showAll() {
     showRemainingTimeOfFollowing();
     showNumberOfFollowingSeriesPerDay();
-    showWeeklyTimeForFolling();
+    showWeeklyTimeForFollowing();
 }
 
 

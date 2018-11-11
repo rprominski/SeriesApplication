@@ -19,14 +19,20 @@ void MoviePrinter::showAllFollowing() {
     preSort();
     for(auto i : *MovieFacade::getInstance().getAllMovies()) {
         if(typeid(*i) == typeid(FollowingSeries)) {
-            std::cout << *i;
+            std::cout << *i <<"\n";
         }
     }
 }
 
 void MoviePrinter::showOne() {
     std::string name = DataCollector::getName();
-    std::cout << *MovieFacade::getInstance().getByName(name) << "\n";
+    auto i = MovieFacade::getInstance().getByName(name);
+    if(i == nullptr) {
+        std::cout << "Movie does not exist\n";
+    } else {
+        std::cout << *i << "\n";
+    }
+
 
 }
 

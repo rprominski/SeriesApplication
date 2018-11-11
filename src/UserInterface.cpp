@@ -12,11 +12,11 @@ UserInterface::UserInterface() : end(0) {}
 
 void UserInterface::showOptions() {
     eventsReminder.remindeInNext24H();
-    std::cout << "\n1.Add film\n"
+    std::cout << "\n1.Add new\n"
         << "2.Add series to following\n"
-        << "3.Show all films\n"
+        << "3.Show all\n"
         << "4.Remove series from following\n"
-        << "5.Remove film\n"
+        << "5.Remove\n"
         << "6.Update\n"
         << "7.Propose something to watching\n"
         << "8.Print statistics of following series\n"

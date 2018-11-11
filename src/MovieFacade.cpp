@@ -25,7 +25,7 @@ void MovieFacade::update() {
         auto t = dataCollector.movieUpdate();
         auto movie = pool.findByName(std::get<1>(t));
         if (movie == nullptr) {
-            std::cout << "Record not exists\n";
+            std::cout << "Record does not exist\n";
             return;
         }
         fileWriter.deleteRecord(movie->getName());
@@ -85,7 +85,7 @@ void MovieFacade::removeMovie() {
         std::string name = DataCollector::getName();
 
         if (pool.findByName(name) == nullptr) {
-            throw std::string("Movie not exists \n");
+            throw std::string("Movie does not exist\n");
         }
         pool -= (name);
         FileWriter fileWriter;
@@ -100,7 +100,7 @@ void MovieFacade::removeFollowing() {
     name = InputValidator::iGetline("Give a name of movie you'd like to remove \n");
     try {
         if (pool.findByName(name) == nullptr) {
-            std::cout << "Movie not exists \n";
+            std::cout << "Movie does not exist\n";
             return;
         }
         Series s = *dynamic_cast<Series *>(pool.findByName(name));
@@ -119,7 +119,7 @@ void MovieFacade::removeFollowing() {
 void MovieFacade::addSeriesToFollowing() {
     std::string name;
 
-    name = InputValidator::iGetline("Give name of series:\n");
+    name = InputValidator::getLine("Give name of series:\n");
     auto series = pool.findByName(name);
 
     if(series == nullptr) {

@@ -20,7 +20,7 @@ void MovieProposer::proposeSomethingToWatch() {
         if(typeid(*i) == typeid(Series)) {
             for(auto j : dynamic_cast<Series*>(i) -> getBroadcastDays()) {
                 if(std::find(days.begin(),days.end(),j) == days.end()) {
-                    std::cout <<"You watch nothing in " << j <<"Maybe try this:\n" << *i;
+                    std::cout <<"You don't watch anything in " << j <<"\nMaybe try this:\n" << *i;
                     return;
                 }
             }

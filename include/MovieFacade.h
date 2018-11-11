@@ -35,6 +35,12 @@ public:
     std::vector<Movie*>* getAllMovies();
 
     void addSeriesToFollowing();
+
+    void sortByName();
+
+    void sortByRate();
+
+    Movie* getByName(std::string name);
 };
 
 

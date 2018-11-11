@@ -8,4 +8,4 @@ add_executable(SeriesApplication src/main.cpp src/FileWriter.cpp
         src/FollowingSeries.cpp include/Pool.h src/UserInterface.cpp include/UserInterface.h src/LiveStream.cpp
         include/LiveStream.h src/EventsReminder.cpp include/EventsReminder.h src/MovieFacade.cpp include/MovieFacade.h
         src/InputValidator.cpp include/InputValidator.h src/MessagePrinter.cpp include/MessagePrinter.h
-        src/DataCollector.cpp include/DataCollector.h)
+        src/DataCollector.cpp include/DataCollector.h src/MoviePrinter.cpp include/MoviePrinter.h)

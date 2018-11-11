@@ -3,6 +3,7 @@
 #include "../include/LiveStream.h"
 #include "../include/MovieFacade.h"
 #include "../include/InputValidator.h"
+#include "../include/MoviePrinter.h"
 #include <iostream>
 #include <fstream>
 #include <map>
@@ -16,13 +17,12 @@ void UserInterface::showOptions() {
         << "3.Show all films\n"
         << "4.Remove series from following\n"
         << "5.Remove film\n"
-        << "6.Propose something to watching\n"
-        << "7.Update\n"
+        << "6.Update\n"
+        << "7.Propose something to watching\n"
         << "8.Print statistics of following series\n"
         << "9.Show info about film\n"
         << "10.Show all following series\n"
-        << "11.Show coming live streams\n"
-        << "12.Exit\n";
+        << "11.Exit\n";
 }
 
 void UserInterface::getAction() {
@@ -33,15 +33,15 @@ void UserInterface::performAction() {
     switch (action) {
         case 1: movieFacade -> addFilm(); break;
         case 2: movieFacade -> addSeriesToFollowing(); break;
-        case 3: movieFacade -> getAllMovies(); break;
+        case 3: MoviePrinter::showAllMovies(); break;
         case 4: movieFacade -> removeFollowing(); break;
         case 5: movieFacade -> removeMovie(); break;
-        case 6: proposeMovieForWatching(); break;
-        case 7: movieFacade -> update(); break;
+        case 6: movieFacade -> update(); break;
+        case 7: proposeMovieForWatching(); break;
         case 8: showStatistics(); break;
-        case 9: showInfoAboutMovie();break;
-        case 10: showAllFollowing(); break;
-        case 12: end = 1; break;
+        case 9: MoviePrinter::showOne();break;
+        case 10: MoviePrinter::showAllFollowing(); break;
+        case 11: end = true; break;
         default: break;
     }
 }
@@ -57,7 +57,7 @@ void UserInterface::start() {
 }
 
 void UserInterface::showAllFollowing() {
-    pool.sort();
+    pool.sortByRate();
     for(auto i : pool.getRecords()) {
         if(typeid(*i) == typeid(FollowingSeries)) {
             std::cout <<*i <<"\n";
@@ -86,7 +86,7 @@ void UserInterface::showInfoAboutMovie() {
 }
 
 void UserInterface::proposeMovieForWatching() {
-    pool.sort();
+    pool.sortByRate();
     if(pool.getRecords().empty()) {
         std::cout << "There is no movies to watch\n";
         return;

@@ -41,12 +41,14 @@ public:
         return true;
     }
 
-    void sort() {
+    void sortByName() {
+        auto comp = [](Movie* m1, Movie* m2)->bool{ return m1->getName() < m2 ->getName(); };
         std::sort(records.begin(),records.end(),comp);
     }
 
-    static bool comp (Movie* m1, Movie* m2) {
-        return m1->getRate() < m2 ->getRate();
+    void sortByRate() {
+        auto comp = [](Movie* m1, Movie* m2)->bool{ return m1->getRate() < m2 ->getRate(); };
+        std::sort(records.begin(),records.end(),comp);
     }
 
     void showAll() {

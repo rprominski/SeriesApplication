@@ -69,8 +69,7 @@ void MovieFacade::addFilm() {
 }
 
 void MovieFacade::removeMovie() {
-    std::string name;
-    name = InputValidator::iGetline("Give a name of movie you'd like to remove \n");
+    std::string name = DataCollector::getName();;
 
     if(pool.findByName(name) == nullptr) {
         throw std::string("Movie not exists \n");
@@ -122,4 +121,16 @@ void MovieFacade::addSeriesToFollowing() {
     fileWriter.write(fs);
     pool -= (name);
     pool += (fs);
+}
+
+void MovieFacade::sortByName() {
+    pool.sortByName();
+}
+
+void MovieFacade::sortByRate() {
+    pool.sortByRate();
+}
+
+Movie* MovieFacade::getByName(std::string name) {
+    return pool.findByName(name);
 }

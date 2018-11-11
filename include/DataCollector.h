@@ -10,9 +10,11 @@
 
 class DataCollector {
 public:
-    Movie* newMovie();
+    static Movie* newMovie();
 
-    std::tuple<int,std::string,std::string> movieUpdate();
+    static std::tuple<int,std::string,std::string> movieUpdate();
+
+    static std::string getName();
 
 
 };

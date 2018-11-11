@@ -63,7 +63,6 @@ bool FileWriter::deleteRecord(std::string recordName) {
             args.push_back(arg);
         }
         if(recordName != args[0]) {
-            std::cout << s <<"\n";
             copy << s <<"\n";
             for(auto i : args) {
                 copy << i << std::endl;

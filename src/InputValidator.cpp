@@ -23,7 +23,7 @@ int InputValidator::cinInt(std::string message) {
 
 int InputValidator::icinInt(std::string message) {
     std::cin.ignore();
-    cinInt(message);
+    return cinInt(message);
 }
 
 std::string InputValidator::cinString(std::string message) {

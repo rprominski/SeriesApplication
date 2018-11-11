@@ -47,9 +47,8 @@ Movie *DataCollector::newMovie() {
 std::tuple<int, std::string, std::string> DataCollector::movieUpdate() {
     int type = 5;
     type = InputValidator::icinInt("1.Movie\n2.Series\n3.Following series\n");
-    std::cout <<"@"<<type<<"@"<<"\n";
     std::string name = InputValidator::getLine("Give a name\n");
-    std::cout << "What do you want update?\n1.Name\n2.Descryption\n3.Rate\n4.Duartion\n";
+    std::cout << "What do you want update?\n1.Nothing\n2.Descryption\n3.Rate\n4.Duartion\n";
     if(type == 2) {
         std::cout << "5.Number of episodes\n6.Broadcast days\n";
     }
@@ -58,7 +57,9 @@ std::tuple<int, std::string, std::string> DataCollector::movieUpdate() {
     }
 
     int what = InputValidator::cinInt();
-
+    if(what == 1) {
+        throw ("Nothing");
+    }
     if((type == 1 && (what < 0 || what > 4)) ||
             (type == 2 && (what < 0 || what > 6)) ||
             (type == 3 && (what < 0 || what > 7)) ||

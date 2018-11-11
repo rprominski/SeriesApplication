@@ -31,7 +31,7 @@ void MoviePrinter::showOne() {
 }
 
 void MoviePrinter::preSort() {
-    int type = InputValidator::icinInt("1.Sort by name\n2.Sort by rate\n");
+    int type = InputValidator::cinInt("1.Sort by name\n2.Sort by rate\n");
     if(type == 2) {
         MovieFacade::getInstance().sortByRate();
     } else {

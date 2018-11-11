@@ -6,6 +6,9 @@ int FollowingSeries::getNumberOfWatchedEpisodes() const {
 
 void FollowingSeries::setNumberOfWatchedEpisodes(int numberOfWatchedEpisodes) {
     FollowingSeries::numberOfWatchedEpisodes = numberOfWatchedEpisodes;
+    if(FollowingSeries::numberOfWatchedEpisodes > numberOfEpisodes) {
+        FollowingSeries::numberOfWatchedEpisodes = numberOfEpisodes;
+    }
 }
 
 int FollowingSeries::calculateTimeToEndOfSeries() {

@@ -26,7 +26,7 @@ void UserInterface::showOptions() {
 }
 
 void UserInterface::getAction() {
-    std::cin>>action;
+    action = InputValidator::cinInt();
 }
 
 void UserInterface::performAction() {
